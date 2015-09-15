@@ -7,9 +7,13 @@
 //
 
 #include <iostream>
+#include "State.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    State A;
+    A.placeKing(7, 7);
+    A.placePawn(7, 4);
+    
+    
     return 0;
 }
