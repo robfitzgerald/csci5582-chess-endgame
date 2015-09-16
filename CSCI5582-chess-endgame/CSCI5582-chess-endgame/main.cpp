@@ -6,13 +6,17 @@
 //  Copyright (c) 2015 Rob Fitzgerald. All rights reserved.
 //
 
-#include <iostream>
-#include "State.h"
+#include "State_02.h"
 
 int main(int argc, const char * argv[]) {
-    State A;
-    A.placeKing(7, 7);
-    A.placePawn(7, 4);
+    Board A;
+    
+    // prepare initial board state with R.Reti endgame
+    A.white.push_back(Piece('K',0,0));
+    A.white.push_back(Piece('P',2,5));
+    A.black.push_back(Piece('K',0,5));
+    A.black.push_back(Piece('P',7,4));
+    
     
     
     return 0;
