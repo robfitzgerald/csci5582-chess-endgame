@@ -1,12 +1,4 @@
-//
-//  State_02.cpp
-//  CSCI5582-chess-endgame
-//
-//  Created by Robert Fitzgerald on 9/14/15.
-//  Copyright (c) 2015 Rob Fitzgerald. All rights reserved.
-//
-
-#include "State_03.h"
+#include "Board.h"
 #include <iostream>
 
 // -------------- class Piece -------------------------------------------
@@ -55,8 +47,11 @@ Board::Board() {
 }
 
 Board::Board(Board& source) {
+    
     for (int i = 0; i < NUM_PLAYERS; ++i) {
-        this->pieces[i] = source.pieces[i];
+        for (int j = 0; j < NUM_TYPES; ++j) {
+            this->pieces[i][j] = source.pieces[i][j];
+        }
     }
     this->move = source.getMove();
 }
@@ -70,15 +65,15 @@ std::string Board::getChessMove() {
     return output;
 }
 
-void Board::setPiece(int pl, Piece pc) {
+void Board::setPiece(int pl, int t, Piece pc) {
     if (0 <= pl && pl < NUM_PLAYERS)
-        pieces[pl].push_back(pc);
+        pieces[pl][t].push_back(pc);
 }
 
-Piece Board::getPiece(int pl, int i) {
+Piece Board::getPiece(int pl, int t, int i) {
     if (0 <= pl && pl < NUM_PLAYERS)
-        if (0 <= i && i < pieces[pl].size())
-            return pieces[pl][i];
+        if (0 <= i && i < pieces[pl][t].size())
+            return pieces[pl][t][i];
         else
             return Piece(-1,-1);
     else

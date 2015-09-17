@@ -7,13 +7,15 @@
 //
 
 #include <iostream>
-#include "State_03.h"
+#include "Board.h"
 
 int main(int argc, const char * argv[]) {
     std::cout << " it begins: \n";
-    Piece test;
+    Piece test(4,5);
     
     Board fredward;
-    fredward.setPiece(0,test);
+    fredward.setPiece(0,0,test);
+    Location result = fredward.getPiece(0,0,0).locate();
+    std::cout << "location is " << result.x << ", " << result.y;
     return 0;
 }
