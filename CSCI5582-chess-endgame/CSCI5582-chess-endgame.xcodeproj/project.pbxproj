@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15EE06AB1BAB231000E2A854 /* State_03.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EE06AA1BAB231000E2A854 /* State_03.cpp */; };
 		15F4A30B1BA7BD3400B0AB8F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4A30A1BA7BD3400B0AB8F /* main.cpp */; };
-		15F4A3201BA7E33600B0AB8F /* State_02.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4A31E1BA7E33600B0AB8F /* State_02.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15EE06A91BAB230700E2A854 /* State_03.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State_03.h; sourceTree = "<group>"; };
+		15EE06AA1BAB231000E2A854 /* State_03.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State_03.cpp; sourceTree = "<group>"; };
 		15F4A3071BA7BD3400B0AB8F /* CSCI5582-chess-endgame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CSCI5582-chess-endgame"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15F4A30A1BA7BD3400B0AB8F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		15F4A31E1BA7E33600B0AB8F /* State_02.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State_02.cpp; sourceTree = "<group>"; };
-		15F4A31F1BA7E33600B0AB8F /* State_02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State_02.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				15F4A30A1BA7BD3400B0AB8F /* main.cpp */,
-				15F4A31E1BA7E33600B0AB8F /* State_02.cpp */,
-				15F4A31F1BA7E33600B0AB8F /* State_02.h */,
+				15EE06AA1BAB231000E2A854 /* State_03.cpp */,
+				15EE06A91BAB230700E2A854 /* State_03.h */,
 			);
 			path = "CSCI5582-chess-endgame";
 			sourceTree = "<group>";
@@ -124,7 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F4A30B1BA7BD3400B0AB8F /* main.cpp in Sources */,
-				15F4A3201BA7E33600B0AB8F /* State_02.cpp in Sources */,
+				15EE06AB1BAB231000E2A854 /* State_03.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
