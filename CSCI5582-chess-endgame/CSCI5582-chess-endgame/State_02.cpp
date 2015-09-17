@@ -8,19 +8,31 @@
 
 #include "State_02.h"
 
-Board::Board(Board& source) {
-    for (int i = 0; i < source.black.size(); ++i) {
-        this->black.push_back(source.black[i]);
+Board::Board() {
+    for (int i = 0; i < BOARD_SIZE; ++i)
+    {
+        for (int j = 0; j < BOARD_SIZE; ++j)
+        {
+            board[i][j] = EMPTY;
+        }
     }
-    for (int i = 0; i < source.white.size(); ++i) {
-        this->white.push_back(source.white[i]);
+}
+
+Board::Board(Board& source) {
+    for (int i = 0; i < BOARD_SIZE; ++i)
+    {
+        for (int j = 0; j < BOARD_SIZE; ++j)
+        {
+            board[i][j] = source.board[i][j];
+        }
     }
     this->setCurrentPlayer(source.getCurrentPlayer());
     //this->setMove(source.getMove());      <---- NO! unique for each board.
     this->setHeuristic(source.getHeuristic());
 }
 
-void Board::applyMove(std::string givenMove) {
+void Board::applyMove(std::string givenMove)
+{
     
     // givenMove is the generated move-string we want to apply to this state
     // this happens once, after a copy constructor has completed a copy.
@@ -35,28 +47,24 @@ void Board::applyMove(std::string givenMove) {
     move = givenMove;
     
     char movePiece = move[0];
-    char newRank = move[4];
-    char newFile = move[5];
+    int oldRank = (int) move[1];
+    int oldFile = (int)  move[2];
+    int newRank = (int)  move[4];
+    int newFile = (int)  move[5];
     
     // cheesy search and update
-    if (currentPlayer == 'B') {
-        for (int p = 0; p < black.size(); ++p) {
-            if (black[p].type == movePiece) {
-                black[p].rank = newRank;
-                black[p].file = newFile;
-            }
-        }
-    } else {
-        for (int p = 0; p < white.size(); ++p) {
-            if (white[p].type == movePiece) {
-                white[p].rank = newRank;
-                white[p].file = newFile;
-            }
-        }
+    if (board[oldRank][oldFile] == movePiece) {
+        // remove old, add new
+        board[oldRank][oldFile] = EMPTY;
+        board[newRank][newFile] = movePiece;
+    } else
+    {
+        // error: expected what got somebizniss
     }
 }
 
-void Board::generateMoves() {
+void Board::generateMoves()
+{
     
     // look at currentPlayer. i mean, look at the guy.
     // always good to look your competition in the eye.
@@ -66,21 +74,27 @@ void Board::generateMoves() {
     
     // cheesy search and update
     if (currentPlayer == 'B') {
-        for (int p = 0; p < black.size(); ++p) {
-            if (black[p].type == 'P') {
+        for (int p = 0; p < black.size(); ++p)
+        {
+            if (black[p].type == 'P')
+            {
                 // do pawn things
                 
                 // 
                 
                 
-            } else if (black[p].type == 'K') {
+            } else if (black[p].type == 'K')
+            {
                 // do king things
-            } else {
+            } else
+            {
                 // we're doing queen things
             }
         }
-    } else {
-        for (int p = 0; p < white.size(); ++p) {
+    } else
+    {
+        for (int p = 0; p < white.size(); ++p)
+        {
             
         }
     }
@@ -88,7 +102,8 @@ void Board::generateMoves() {
     
 }
 
-int state(std::string currentState, int heuristic, bool min) {
+int state(std::string currentState, int heuristic, bool min)
+{
     int level;  // depth of search, stop if level >= SOME_DEPTH_CONSTANT
     level = 4; // level may need to be a parameter..
     
@@ -102,7 +117,8 @@ int state(std::string currentState, int heuristic, bool min) {
     
     
     std::vector<Board> possibleStates;
-    for (int i = 0; i < possibleStates.size(); ++i) {
+    for (int i = 0; i < possibleStates.size(); ++i)
+    {
         // something like,
         possibleStates[0].setHeuristic(state(possibleStates[0].getMove(), 0, true));
     }

@@ -15,16 +15,16 @@
 // State_01 (State.h) used a 2D array of chars to represent the board.
 // this version will use 2 arrays of pieces and their positions with no 'board'
 
-struct Piece {
-    char type, file, rank;
-    // ([PKQ], [a-h], [1-8])
-    Piece(char t, char f, char r): type(t), file(f), rank(r) {}
-};
+const int BOARD_SIZE = 8;
+enum Piece { EMPTY, PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING };
 
 class Board {
 public:
     Board();
     Board(Board&);
+    
+    void place (Piece p, int x, int y) { board[x][y] = p; };
+    void remove (int x, int y) { board[x][y] = EMPTY; };
     
     std::string getMove() { return move; }
     void setMove(std::string m) { move = m; }
@@ -38,11 +38,8 @@ public:
     void applyMove(std::string);
     void generateMoves();
     
-    std::vector<Piece> black;
-    std::vector<Piece> white;
-    
 private:
-
+    int board[BOARD_SIZE][BOARD_SIZE];
     std::string move;  //
     char currentPlayer;  // B, W
     int heuristic;
