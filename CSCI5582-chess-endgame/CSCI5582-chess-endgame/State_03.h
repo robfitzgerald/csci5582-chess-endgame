@@ -19,6 +19,7 @@ struct Location {
 
 class Piece {
 public:
+    Piece();
     Piece(int x, int y) {
         place(x,y);
     }
@@ -52,7 +53,7 @@ public:
     Board();
     Board(Board&);
     
-    void addPiece(int, Piece);
+    void setPiece(int, Piece);
     Piece getPiece(int, int);
     size_t getNumPieces(int pl) { return pieces[pl].size(); }
     

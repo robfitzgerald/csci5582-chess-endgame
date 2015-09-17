@@ -66,7 +66,7 @@ std::string Board::getChessMove() {
     return output;
 }
 
-void Board::addPiece(int pl, Piece pc) {
+void Board::setPiece(int pl, Piece pc) {
     if (0 <= pl && pl < NUM_PLAYERS)
         pieces[pl].push_back(pc);
 }
