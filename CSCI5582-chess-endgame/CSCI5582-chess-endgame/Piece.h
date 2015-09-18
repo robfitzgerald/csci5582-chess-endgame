@@ -11,6 +11,10 @@
 
 #include <cstdlib>
 
+const int NUM_PLAYERS = 2;
+enum NAMES { WHITE, BLACK };
+const int NUM_TYPES = 7;
+enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN };
 typedef uint64_t Bitboard;
 
 struct Location {
@@ -28,7 +32,7 @@ public:
     void clear();
     bool place(int, int);
     Location locate();
-    virtual void moveStrategy(Bitboard) =0;
+    virtual void generateMoves(const Bitboard&, const Bitboard&, const int) =0;
     
 private:
     char type;

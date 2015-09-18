@@ -32,11 +32,12 @@ void Board::setPiece(int pl, int t, Piece pc) {
 }
 
 Piece Board::getPiece(int pl, int t, int i) {
+    Empty err(-1,-1);
     if (0 <= pl && pl < NUM_PLAYERS)
         if (0 <= i && i < pieces[pl][t].size())
             return pieces[pl][t][i];
         else
-            return Empty(-1,-1);
+            return err;
     else
-        return Empty(-1,-1);
+        return err;
 }

@@ -5,11 +5,6 @@
 #include <string>
 #include "Piece.h"
 
-const int NUM_PLAYERS = 2;
-enum NAMES { WHITE, BLACK };
-const int NUM_TYPES = 7;
-enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN };
-
 class Empty: public Piece {
 public:
     typedef Piece super;
@@ -17,7 +12,7 @@ public:
     Empty(int x, int y) {
         super::place(x, y);
     }
-    void moveStrategy(Bitboard n) { /*dummy*/ }
+    void generateMoves(const Bitboard& a, const Bitboard& b, const int c) { /* dummy */ };
 };
 
 class Board {
