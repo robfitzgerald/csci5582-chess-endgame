@@ -9,6 +9,8 @@
 #ifndef __CSCI5582_chess_endgame__Piece__
 #define __CSCI5582_chess_endgame__Piece__
 
+#include <cstdlib>
+
 typedef uint64_t Bitboard;
 
 struct Location {

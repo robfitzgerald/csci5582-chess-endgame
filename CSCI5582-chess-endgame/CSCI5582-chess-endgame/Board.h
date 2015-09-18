@@ -3,34 +3,21 @@
 
 #include <vector>
 #include <string>
-
-typedef uint64_t Bitboard;
+#include "Piece.h"
 
 const int NUM_PLAYERS = 2;
 enum NAMES { WHITE, BLACK };
 const int NUM_TYPES = 7;
 enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN };
 
-struct Location {
-    int x;
-    int y;
-    Location(int xpos, int ypos): x(xpos), y(ypos) {}
-};
-
-class Piece {
+class Empty: public Piece {
 public:
-    Piece();
-    Piece(int x, int y) {
-        place(x,y);
+    typedef Piece super;
+    Empty();
+    Empty(int x, int y) {
+        super::place(x, y);
     }
-    void clear();
-    bool place(int, int);
-    Location locate();
-    virtual void moveStrategy(Bitboard) =0;
-
-private:
-    char type;
-    Bitboard board;
+    void moveStrategy(Bitboard n) { /*dummy*/ }
 };
 
 class Board {

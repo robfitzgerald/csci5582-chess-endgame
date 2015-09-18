@@ -11,7 +11,7 @@
 
 int main(int argc, const char * argv[]) {
     std::cout << " it begins: \n";
-    Piece test(4,5);
+    Empty test(4,5);
     
     Board fredward;
     fredward.setPiece(0,0,test);
