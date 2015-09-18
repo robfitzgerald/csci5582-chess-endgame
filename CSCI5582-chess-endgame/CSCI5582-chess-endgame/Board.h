@@ -26,6 +26,7 @@ public:
     void clear();
     bool place(int, int);
     Location locate();
+    virtual void moveStrategy(Bitboard) =0;
 
 private:
     char type;
@@ -43,9 +44,16 @@ public:
     std::string getMove() { return move; }
     std::string getChessMove();
     
+    void setHeuristic(int h) { heuristic = h; }
+    int getHeuristic() { return heuristic; }
+    
+    void setPlayer(NAMES pl) { currentPlayer = pl; }
+    NAMES getPlayer() { return currentPlayer; }
 private:
     std::string move;
     std::vector<Piece> pieces [NUM_PLAYERS][NUM_TYPES];
+    NAMES currentPlayer;
+    int heuristic;
 };
 
 
