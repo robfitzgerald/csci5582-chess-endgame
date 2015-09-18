@@ -1,20 +1,8 @@
-//
-//  Piece.h
-//  CSCI5582-chess-endgame
-//
-//  Created by Robert Fitzgerald on 9/17/15.
-//  Copyright (c) 2015 Rob Fitzgerald. All rights reserved.
-//
-
 #ifndef __CSCI5582_chess_endgame__Piece__
 #define __CSCI5582_chess_endgame__Piece__
 
 #include <cstdlib>
 
-const int NUM_PLAYERS = 2;
-enum NAMES { WHITE, BLACK };
-const int NUM_TYPES = 7;
-enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN };
 typedef uint64_t Bitboard;
 
 struct Location {
@@ -29,13 +17,13 @@ public:
     Piece(int x, int y) {
         place(x,y);
     }
+    Piece(Piece&);
+    
     void clear();
     bool place(int, int);
     Location locate();
-    virtual void generateMoves(const Bitboard&, const Bitboard&, const int) =0;
     
-private:
-    char type;
+    // for lack of a safer way to expose the board for bit ops.. it's public
     Bitboard board;
 };
 

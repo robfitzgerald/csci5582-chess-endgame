@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Board.h"
+#include "MoveStrategy.h"
 
 // a State
 
@@ -23,9 +24,9 @@
 void moves(Board&);
 
 
-int State (Board&);
+int State (Board&, MoveStrategy&);
 
-
+void Tree (Board&, MoveStrategy&);
 
 
 #endif /* defined(__CSCI5582_chess_endgame__State__) */

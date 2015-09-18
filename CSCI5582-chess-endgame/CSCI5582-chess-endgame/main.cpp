@@ -7,7 +7,6 @@
 //
 
 #include <iostream>
-#include "Board.h"
 
 int main(int argc, const char * argv[]) {
     std::cout << " it begins: \n";

@@ -1,12 +1,9 @@
-//
-//  Piece.cpp
-//  CSCI5582-chess-endgame
-//
-//  Created by Robert Fitzgerald on 9/17/15.
-//  Copyright (c) 2015 Rob Fitzgerald. All rights reserved.
-//
-
 #include "Piece.h"
+
+Piece::Piece(Piece& source) {
+    Location pos = source.locate();
+    this->place(pos.x, pos.y);
+}
 
 void Piece::clear() { board = 0; }
 

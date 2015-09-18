@@ -5,14 +5,18 @@
 #include <string>
 #include "Piece.h"
 
+const int NUM_PLAYERS = 2;
+enum NAMES { WHITE, BLACK };
+const int NUM_TYPES = 9;
+// the last $NUM_PLAYERS of TYPE enum should be named for all player groups
+enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, ALLMINE, ALLTHEIRS };
+
 class Empty: public Piece {
 public:
     typedef Piece super;
-    Empty();
-    Empty(int x, int y) {
-        super::place(x, y);
+    Empty() {
+        super::place(-1,-1);
     }
-    void generateMoves(const Bitboard& a, const Bitboard& b, const int c) { /* dummy */ };
 };
 
 class Board {
@@ -22,6 +26,9 @@ public:
     
     void setPiece(int, int, Piece);
     Piece getPiece(int, int, int);
+    size_t getPieceCount(int player, int type) {
+        return pieces[player][type].size();
+    }
     
     std::string getMove() { return move; }
     std::string getChessMove();
@@ -32,6 +39,9 @@ public:
     void setPlayer(NAMES pl) { currentPlayer = pl; }
     NAMES getPlayer() { return currentPlayer; }
 private:
+    void populateTeamBoards();
+    Piece& exposeBoard(int, int, int);
+    
     std::string move;
     std::vector<Piece> pieces [NUM_PLAYERS][NUM_TYPES];
     NAMES currentPlayer;

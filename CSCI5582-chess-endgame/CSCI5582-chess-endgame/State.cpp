@@ -6,16 +6,15 @@ void moves(Board& current) {
     }
 }
 
-
-int State (Board& currentBoard) {
-    std::vector<Board> possiblities;
+int State (Board& currentBoard, MoveStrategy& moveStrategy) {
+    std::vector<Board>* possiblities;
     int bestHeuristic = currentBoard.getHeuristic();
     
     // generate moves
     moves(currentBoard);
     
     // no moves, BASE CASE.  return heuristic
-    if (possiblities.size() == 0)
+    if (possiblities->size() == 0)
         return bestHeuristic;
     
     // for loop
@@ -24,4 +23,8 @@ int State (Board& currentBoard) {
     
     
     return 1;
+}
+
+void Tree (Board& startState, MoveStrategy& moveStrategy) {
+    
 }
