@@ -5,15 +5,15 @@
 #include "Board.h"
 #include "MoveStrategy.h"
 
-class Pawn: public MoveStrategy {
+class MovePawn: public MoveStrategy {
     void generateMoves(Board&, std::vector<Board>*&);
 };
 
-class King: public MoveStrategy {
+class MoveKing: public MoveStrategy {
     void generateMoves(Board&, std::vector<Board>&);
 };
 
-class Queen: public MoveStrategy {
+class MoveQueen: public MoveStrategy {
     void generateMoves(Board&, std::vector<Board>&);
 };
 

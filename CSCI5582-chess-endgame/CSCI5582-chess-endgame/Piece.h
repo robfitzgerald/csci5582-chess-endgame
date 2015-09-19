@@ -17,11 +17,11 @@ public:
     Piece(int x, int y) {
         place(x,y);
     }
-    Piece(Piece&);
+    Piece(const Piece&);
     
     void clear();
     bool place(int, int);
-    Location locate();
+    Location locate() const;
     
     // for lack of a safer way to expose the board for bit ops.. it's public
     Bitboard board;

@@ -12,7 +12,7 @@ Board::Board() {
     move = "";
 }
 
-Board::Board(Board& source) {
+Board::Board(const Board& source) {
     for (int i = 0; i < NUM_PLAYERS; ++i) {
         for (int j = 0; j < NUM_TYPES; ++j) {
             this->pieces[i][j] = source.pieces[i][j];
@@ -43,7 +43,7 @@ void Board::populateTeamBoards() {
 }
 
 // obsolete - i exposed bitboard
-Piece& Board::exposeBoard(int pl, int t, int i) {
+Piece& Board::exposeBoard(NAMES pl, TYPE t, int i) {
     return pieces[pl][t][i];
 }
 
@@ -56,16 +56,16 @@ std::string Board::getChessMove() {
     return output;
 }
 
-void Board::setPiece(int pl, int t, Piece pc) {
-    if (0 <= pl && pl < NUM_PLAYERS)
+void Board::setPiece(NAMES pl, TYPE t, Piece pc) {
+    if (0 <= pl) // && pl < NUM_PLAYERS)
         pieces[pl][t].push_back(pc);
 }
 
-Piece Board::getPiece(int pl, int t, int i) {
-    Empty err;
-    if (0 <= pl && pl < NUM_PLAYERS)
-        if (0 <= i && i < pieces[pl][t].size())
-            return pieces[pl][t][i];
+Piece Board::getPiece(NAMES pl, TYPE t, int index) {
+    Piece err(-1,-1);
+    if (0 <= pl) // && pl < NUM_PLAYERS)
+        if (0 <= index && index < pieces[pl][t].size())
+            return pieces[pl][t][index];
         else
             return err;
     else

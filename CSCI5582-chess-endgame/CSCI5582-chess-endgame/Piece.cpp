@@ -1,6 +1,10 @@
 #include "Piece.h"
 
-Piece::Piece(Piece& source) {
+Piece::Piece() {
+    // nothing
+}
+
+Piece::Piece(const Piece& source) {
     Location pos = source.locate();
     this->place(pos.x, pos.y);
 }
@@ -24,7 +28,7 @@ bool Piece::place(int x, int y) {
     
 }
 
-Location Piece::locate() {
+Location Piece::locate() const {
     int index = -1, i = 0;
     Bitboard bit = 1;
     
