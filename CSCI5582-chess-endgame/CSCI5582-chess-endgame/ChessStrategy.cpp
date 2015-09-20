@@ -49,9 +49,9 @@ void MoveQueen::generateMoves(Board& game, std::vector<Board>& possibilities) {
     
 }
 
-// true if
 bool isOnBoard(Location here) {
-    
+    if (here.x < 0 || here.x >= 8 || here.y < 0 || here.y >= 8)
+        return false;
     return true;
 }
 

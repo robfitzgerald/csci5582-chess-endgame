@@ -1,4 +1,5 @@
 #include "Piece.h"
+#include <iostream>
 
 Piece::Piece() {
     legal = true;
@@ -14,7 +15,8 @@ void Piece::clear() { board = 0; }
 
 // returns success in storing piece location
 void Piece::place(int x, int y) {
-    if ( !((x + 8*y) > 63)) {               // only checking range
+    if ( !((x + 8*y) > 63) && !((x + 8*y) < 0)) {               // only checking range
+        std::cout << "this piece x,y: " << x << "," << y << std::endl;
         this->legal = true;
         int index = x + (8*y);              // bitboard 'index'
         this->board = 1;                          // storing a bit is 2^index; start at 2^0 = 1
