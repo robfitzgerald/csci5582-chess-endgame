@@ -5,23 +5,19 @@
 int main(int argc, const char * argv[]) {
     
     std::cout << " it begins: \n";
-    Piece test(4,4);
-    Piece block(4,5);
     
-    
-    
-    Board fred;
+    Board rReti;
     std::vector<Board> possibilities;
     
-    fred.setPiece(WHITE,PAWN,test);
-    fred.setPiece(WHITE,KING,block);
-    fred.setPlayer(WHITE);
-    Location t2 = fred.getPiece(WHITE, PAWN, 0).locate();
+    rReti.setPiece(WHITE,PAWN,Piece(2,5));
+    rReti.setPiece(WHITE,KING,Piece(7,7));
+    rReti.setPiece(BLACK,PAWN,Piece(7,4));
+    rReti.setPiece(BLACK,KING,Piece(0,5));
+    rReti.setPlayer(WHITE);
+    Location t2 = rReti.getPiece(WHITE, PAWN, 0).locate();
     std::cout << " that was: " << t2.x << "," << t2.y << ", and now, into Tree()" << std::endl;
     
-    Tree(fred);
-    
-    //MovePawn::instance().generateMoves(fred,possibilities);
+    Tree(rReti);
     
     return 0;
 }

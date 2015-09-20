@@ -16,13 +16,6 @@ int State (Board& currentBoard) {
     std::vector<Board> possiblities;
     int bestHeuristic = currentBoard.getHeuristic();
     
-    std::cout << "entering state \n";
-    Piece test2 = currentBoard.getPiece(currentBoard.getPlayer(), ALLMINE, 0);
-    test2.debugPrintBoard();
-    std::cout << "is it the print sequence? \n";
-    Piece test3 = currentBoard.getPiece(currentBoard.getPlayer(), ALLMINE, 0);
-    test3.debugPrintBoard();
-    
     // generate moves
     moves(currentBoard, possiblities);
     
@@ -35,7 +28,7 @@ int State (Board& currentBoard) {
     // call State(possiblities[i]);
     
     for (int i = 0; i < possiblities.size(); ++i) {
-        // this should be where we compare heuristics
+        // <--- this should be where we compare heuristics
         Location test = possiblities[i].getPiece(WHITE, PAWN, 0).locate();
         std::cout << "possibility " << i << " exists.\n";
         std::cout   << "(x,y) " << test.x << ", " << test.y << "\n";
@@ -51,11 +44,10 @@ void Tree (Board& startState) {
 
 void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
     std::cout << "generatePawnMoves() \n";
-    
-    std::cout << "current player: " << game.getPlayer() << "\n";
-    Piece all = game.getPiece(game.getPlayer(), ALLMINE, 0);
-    std::cout << "all moves: \n";
-    all.debugPrintBoard();
+
+//    Piece all = game.getPiece(game.getPlayer(), ALLMINE, 0);
+//    std::cout << "all moves: \n";
+//    all.debugPrintBoard();
     
     size_t numPawns = game.getPieceCount(game.getPlayer(), PAWN);
     int direction;
@@ -65,7 +57,7 @@ void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
         direction = -1;
     }
     
-    std::cout << "before outer for loop in generatePawnMoves() \n";
+//    std::cout << "before outer for loop in generatePawnMoves() \n";
     Piece test3 = game.getPiece(game.getPlayer(), ALLMINE, 0);
     test3.debugPrintBoard();
     
@@ -74,9 +66,9 @@ void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
         Piece thisPiece = game.getPiece(thisGuy, PAWN, i);
         Location current = thisPiece.locate();
         
-        std::cout << "before inner for loop in generatePawnMoves() \n";
-        Piece test2 = game.getPiece(game.getPlayer(), ALLMINE, 0);
-        test2.debugPrintBoard();
+//        std::cout << "before inner for loop in generatePawnMoves() \n";
+//        Piece test2 = game.getPiece(game.getPlayer(), ALLMINE, 0);
+//        test2.debugPrintBoard();
         
         // pawn can move diag left, up, diag right
         for (int j = -1; j < 2; ++j) {
@@ -96,14 +88,19 @@ void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
             all.debugPrintBoard();
             
             if (isOnBoard(newPos) && noBuddies(game, PAWN, move)) {
-                std::cout << "if (isOnBoard(newPos) && noBuddies(game, PAWN, move)) => true \n";
+//                std::cout << "if (isOnBoard(newPos) && noBuddies(game, PAWN, move)) => true \n";
                 Board temp = game;
                 temp.replacePiece(game.getPlayer(), PAWN, i, move);
                 
-                Piece seeAll = temp.getPiece(WHITE, ALLMINE, 0);
-                //seeAll.debugPrintBoard();
+                // <--- write new move function needed here
+                
+                // <--- not setting heuristic but we need the MOVE string
+                
+//                Piece seeAll = temp.getPiece(WHITE, ALLMINE, 0);
+//                seeAll.debugPrintBoard();
                 
                 possibilities.push_back(temp);
+//                std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
             }
         }
     }
@@ -132,4 +129,39 @@ bool noBuddies(Board& board, TYPE t, Piece m) {
         return false;
     }
     return true;
+}
+
+char getPieceChar(TYPE t) {
+    switch(t) {
+        case EMPTY:
+            return ' ';
+            break;
+        case KING:
+            return 'K';
+            break;
+        case QUEEN:
+            return 'Q';
+            break;
+        case BISHOP:
+            return 'B';
+            break;
+        case KNIGHT:
+            return 'K';
+            break;
+        case ROOK:
+            return 'R';
+            break;
+        case PAWN:
+            return 'P';
+            break;
+        case ALLMINE:
+            return '>';
+            break;
+        case ALLTHEIRS:
+            return '<';
+            break;
+        default:
+            return '?';
+    }
+    
 }

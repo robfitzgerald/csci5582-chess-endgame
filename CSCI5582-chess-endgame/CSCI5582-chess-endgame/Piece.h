@@ -13,12 +13,12 @@ struct Location {
 
 class Piece {
 public:
+    // for now, public everything
     Piece();
     Piece(int x, int y) {
         place(x,y);
     }
     Piece(const Piece&);
-    bool legal;
 
     void clear();
     void place(int, int);
@@ -26,8 +26,9 @@ public:
     bool isLegal() { return legal; }
     void debugPrintBoard();
     
-    // for lack of a safer way to expose the board for bit ops.. it's public (v2 - friend function)
+    // (v2 - friend function for Bitboard access)
     Bitboard board;
+    bool legal;
 };
 
 #endif /* defined(__CSCI5582_chess_endgame__Piece__) */

@@ -3,6 +3,8 @@
 
 // -------------- class Board -------------------------------------------
 
+
+// the start state uses this constructor
 Board::Board() {
     Piece clearPiece;
     clearPiece.clear();
@@ -11,8 +13,16 @@ Board::Board() {
     this->pieces[WHITE][ALLTHEIRS].push_back(clearPiece);
     this->pieces[BLACK][ALLTHEIRS].push_back(clearPiece);
     move = "";
+    heuristic = 0;
+    heuristicSet = false;
 }
 
+// a new 'possibility' uses this constructor.  we need to:
+//   copy the pieces
+//   in code, this should be immediately followed by a call to replacePiece()
+//    which in turn will call populateTeamBoards().
+//   that should be called by a function to write a new move string
+//   we don't want to use the source's heuristic
 Board::Board(const Board& source) {
     for (int i = 0; i < NUM_PLAYERS; ++i) {
         for (int j = 0; j < NUM_TYPES; ++j) {
@@ -20,7 +30,9 @@ Board::Board(const Board& source) {
         }
     }
     populateTeamBoards();
-    this->move = source.getMove();
+    move = "";
+    heuristic = 0;
+    heuristicSet = false;
 }
 
 void Board::populateTeamBoards() {

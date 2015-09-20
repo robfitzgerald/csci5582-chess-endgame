@@ -7,8 +7,8 @@ Piece::Piece() {
 }
 
 Piece::Piece(const Piece& source) {
-    Location pos = source.locate();
-    place(pos.x, pos.y);
+    board = source.board;
+    legal = source.legal;
 }
 
 void Piece::clear() { board = 0; }

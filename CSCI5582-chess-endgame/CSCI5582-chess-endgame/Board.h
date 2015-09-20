@@ -11,14 +11,6 @@ const int NUM_TYPES = 9;
 // the last $NUM_PLAYERS of TYPE enum should be named for all player groups
 enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, ALLMINE, ALLTHEIRS };
 
-//class Empty: public Piece {
-//public:
-//    typedef Piece super;
-//    Empty() {
-//        super::place(-1,-1);
-//    }
-//};
-
 class Board {
 public:
     Board();
@@ -35,9 +27,10 @@ public:
     std::string getChessMove();
     std::string getMove() const { return move; }
     
-    void setHeuristic(int h) { heuristic = h; }
+    void setHeuristic(int h) { heuristic = h; heuristicSet = true; }
+    bool isHeuristicSet() { return heuristicSet; }
     int getHeuristic() { return heuristic; }
-    int getHeuristic() const { return heuristic; }
+    int getHeuristic() const { return heuristic; }    
     
     void setPlayer(NAMES pl) { currentPlayer = pl; }
     NAMES getPlayer() { return currentPlayer; }
@@ -51,6 +44,7 @@ private:
     std::vector<Piece> pieces [NUM_PLAYERS][NUM_TYPES];
     NAMES currentPlayer;
     int heuristic;
+    bool heuristicSet;
 };
 
 
