@@ -18,7 +18,6 @@ public:
         place(x,y);
     }
     Piece(const Piece&);
-    
     bool legal;
 
     void clear();

@@ -25,7 +25,7 @@ public:
     Board(const Board&);
     
     void setPiece(NAMES, TYPE, Piece);
-    Piece getPiece(NAMES, TYPE, int);
+    Piece& getPiece(NAMES, TYPE, int);
     size_t getPieceCount(NAMES player, TYPE type) {
         return pieces[player][type].size();
     }

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "Board.h"
-#include "MoveStrategy.h"
 #include "ChessStrategy.h"
 
 // a State

@@ -3,34 +3,51 @@
 
 #include <vector>
 #include "Board.h"
-#include "MoveStrategy.h"
 
-class MovePawn: public MoveStrategy {
+class MovePawn {
 public:
-    static void create();
+    static MovePawn& instance() {
+        static MovePawn source;
+        m_pInstance = &source;
+        return *m_pInstance;
+    };
     void generateMoves(Board&, std::vector<Board>&);
-protected:
-    MovePawn();
-    virtual ~MovePawn(){};
+private:
+    MovePawn(){};
+    MovePawn(MovePawn const&){};
+    MovePawn& operator=(const MovePawn& source){
+        if (this != &source) {
+            m_pInstance = source.m_pInstance;
+        }
+        return *this;
+    };
+    static MovePawn* m_pInstance;
 };
 
-class MoveKing: public MoveStrategy {
+class MoveKing {
 public:
-    static void create();
+    static void instance();
     void generateMoves(Board&, std::vector<Board>&);
 protected:
-    MoveKing();
-    virtual ~MoveKing(){};
+    MoveKing(){};
+    MoveKing(MoveKing const&){};
+//    MoveKing& operator=(MoveKing const&){};
+    static MoveKing* m_pInstance;
 };
 
-class MoveQueen: public MoveStrategy {
+
+
+class MoveQueen {
 public:
-    static void create();
+    static void instance();
     void generateMoves(Board&, std::vector<Board>&);
-protected:
-    MoveQueen();
-    virtual ~MoveQueen(){};
+private:
+    MoveQueen(){};
+    MoveQueen(MoveQueen const&){};
+//    MoveQueen& operator=(MoveQueen const&){};
+    static MoveQueen* m_pInstance;
 };
+
 
 bool isOnBoard(Location here);
 bool noBuddies(Board&, TYPE, Piece);

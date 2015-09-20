@@ -7,7 +7,7 @@
 // not the best design pattern it turns out (fail)
 // v2 : solve programmatic strategy iteration
 void moves(Board& current, std::vector<Board>& possibilities) {
-    MovePawn::instance()->generateMoves(current, possibilities);
+    MovePawn::instance().generateMoves(current, possibilities);
     //MoveKing::instance()->generateMoves(current, possibilities);
     //MoveQueen::instance()->generateMoves(current, possibilities);
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		154F93041BAE0996004E8E7E /* MoveStrategy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 154F93031BAE0996004E8E7E /* MoveStrategy.cpp */; };
 		15EE06AD1BAB795200E2A854 /* Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EE06AC1BAB795200E2A854 /* Board.cpp */; };
 		15EE06B11BAB7FC900E2A854 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EE06AF1BAB7FC900E2A854 /* State.cpp */; };
 		15EE06B41BABB01300E2A854 /* Piece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EE06B21BABB01300E2A854 /* Piece.cpp */; };
@@ -28,7 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		154F93031BAE0996004E8E7E /* MoveStrategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MoveStrategy.cpp; sourceTree = "<group>"; };
 		15EE06AC1BAB795200E2A854 /* Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Board.cpp; sourceTree = "<group>"; };
 		15EE06AE1BAB795700E2A854 /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
 		15EE06AF1BAB7FC900E2A854 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
@@ -37,7 +35,6 @@
 		15EE06B31BABB01300E2A854 /* Piece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Piece.h; sourceTree = "<group>"; };
 		15EE06B51BABB83900E2A854 /* ChessStrategy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChessStrategy.cpp; sourceTree = "<group>"; };
 		15EE06B61BABB83900E2A854 /* ChessStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChessStrategy.h; sourceTree = "<group>"; };
-		15EE06B81BABC0C100E2A854 /* MoveStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveStrategy.h; sourceTree = "<group>"; };
 		15F4A3071BA7BD3400B0AB8F /* CSCI5582-chess-endgame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CSCI5582-chess-endgame"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15F4A30A1BA7BD3400B0AB8F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,16 +70,14 @@
 			isa = PBXGroup;
 			children = (
 				15F4A30A1BA7BD3400B0AB8F /* main.cpp */,
-				15EE06AC1BAB795200E2A854 /* Board.cpp */,
-				15EE06AF1BAB7FC900E2A854 /* State.cpp */,
 				15EE06B01BAB7FC900E2A854 /* State.h */,
-				15EE06B51BABB83900E2A854 /* ChessStrategy.cpp */,
+				15EE06AF1BAB7FC900E2A854 /* State.cpp */,
 				15EE06B61BABB83900E2A854 /* ChessStrategy.h */,
+				15EE06B51BABB83900E2A854 /* ChessStrategy.cpp */,
 				15EE06AE1BAB795700E2A854 /* Board.h */,
-				15EE06B21BABB01300E2A854 /* Piece.cpp */,
+				15EE06AC1BAB795200E2A854 /* Board.cpp */,
 				15EE06B31BABB01300E2A854 /* Piece.h */,
-				15EE06B81BABC0C100E2A854 /* MoveStrategy.h */,
-				154F93031BAE0996004E8E7E /* MoveStrategy.cpp */,
+				15EE06B21BABB01300E2A854 /* Piece.cpp */,
 			);
 			path = "CSCI5582-chess-endgame";
 			sourceTree = "<group>";
@@ -144,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15EE06B41BABB01300E2A854 /* Piece.cpp in Sources */,
-				154F93041BAE0996004E8E7E /* MoveStrategy.cpp in Sources */,
 				15F4A30B1BA7BD3400B0AB8F /* main.cpp in Sources */,
 				15EE06AD1BAB795200E2A854 /* Board.cpp in Sources */,
 				15EE06B71BABB83900E2A854 /* ChessStrategy.cpp in Sources */,

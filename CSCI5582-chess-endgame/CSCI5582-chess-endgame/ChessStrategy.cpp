@@ -2,10 +2,13 @@
 
 // v1.0.0 - not worry about bitwise board move operations
 
+
+MovePawn* MovePawn::m_pInstance = NULL;
+
 void MovePawn::generateMoves(Board& game, std::vector<Board>& possibilities) {
     size_t numPawns = game.getPieceCount(game.getPlayer(), PAWN);
     int direction;
-    if (game.getPlayer() == 0) {
+    if (game.getPlayer() == WHITE) {
         direction = 1;
     } else {
         direction = -1;
@@ -32,9 +35,15 @@ void MovePawn::generateMoves(Board& game, std::vector<Board>& possibilities) {
     }
 }
 
+
+MoveKing* MoveKing::m_pInstance = NULL;
+
 void MoveKing::generateMoves(Board& game, std::vector<Board>& possibilities) {
     
 }
+
+
+MoveQueen* MoveQueen::m_pInstance = NULL;
 
 void MoveQueen::generateMoves(Board& game, std::vector<Board>& possibilities) {
     
