@@ -71,3 +71,7 @@ Piece Board::getPiece(NAMES pl, TYPE t, int index) {
     else
         return err;
 }
+
+void Board::replacePiece(NAMES n, TYPE t, int i, Piece mod) {
+    pieces[n][t][i] = mod;
+}

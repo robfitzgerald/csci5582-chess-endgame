@@ -4,6 +4,7 @@
 #include <vector>
 #include "Board.h"
 #include "MoveStrategy.h"
+#include "ChessStrategy.h"
 
 // a State
 
@@ -21,12 +22,11 @@
 
 // because
 
-void moves(Board&);
+void moves(Board&, std::vector<Board>&);
 
+int State (Board&);
 
-int State (Board&, MoveStrategy&);
-
-void Tree (Board&, MoveStrategy&);
+void Tree (Board&);
 
 
 #endif /* defined(__CSCI5582_chess_endgame__State__) */

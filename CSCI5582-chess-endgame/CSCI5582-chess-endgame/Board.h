@@ -29,11 +29,11 @@ public:
     size_t getPieceCount(NAMES player, TYPE type) {
         return pieces[player][type].size();
     }
+    void replacePiece(NAMES, TYPE, int, Piece);
     
     std::string getMove() { return move; }
     std::string getChessMove();
     std::string getMove() const { return move; }
-
     
     void setHeuristic(int h) { heuristic = h; }
     int getHeuristic() { return heuristic; }

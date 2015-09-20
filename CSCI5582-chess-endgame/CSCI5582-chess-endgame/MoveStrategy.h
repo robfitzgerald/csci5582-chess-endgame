@@ -3,8 +3,18 @@
 
 #include "Board.h"
 
+// with help from http://www.yolinux.com/TUTORIALS/C++Singleton.html
+
 class MoveStrategy {
-    virtual void moveStrategy(Board&, std::vector<Board>&) = 0;
+public:
+    static MoveStrategy* instance();
+    static bool exists();
+    virtual void generateMoves(Board&, std::vector<Board>&) = 0;
+protected:
+    MoveStrategy(){};
+    virtual ~MoveStrategy(){};
+    static MoveStrategy* mpoSssInstance;
+    
 };
 
 #endif
