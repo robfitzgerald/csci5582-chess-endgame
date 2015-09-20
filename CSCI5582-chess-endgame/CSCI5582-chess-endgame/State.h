@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "Board.h"
-#include "ChessStrategy.h"
 
 // a State
 
@@ -27,5 +26,10 @@ int State (Board&);
 
 void Tree (Board&);
 
+void generatePawnMoves(Board&, std::vector<Board>&);
+
+bool isOnBoard(Location);
+
+bool noBuddies(Board&, TYPE, Piece);
 
 #endif /* defined(__CSCI5582_chess_endgame__State__) */

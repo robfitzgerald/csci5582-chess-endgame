@@ -25,7 +25,7 @@ public:
     Board(const Board&);
     
     void setPiece(NAMES, TYPE, Piece);
-    Piece& getPiece(NAMES, TYPE, int);
+    Piece getPiece(NAMES, TYPE, int);
     size_t getPieceCount(NAMES player, TYPE type) {
         return pieces[player][type].size();
     }
@@ -42,6 +42,7 @@ public:
     void setPlayer(NAMES pl) { currentPlayer = pl; }
     NAMES getPlayer() { return currentPlayer; }
     NAMES getPlayer() const { return currentPlayer; }
+    
 private:
     void populateTeamBoards();
     Piece& exposeBoard(NAMES, TYPE, int);

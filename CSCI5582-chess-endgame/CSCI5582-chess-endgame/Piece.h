@@ -24,6 +24,7 @@ public:
     void place(int, int);
     Location locate() const;
     bool isLegal() { return legal; }
+    void debugPrintBoard();
     
     // for lack of a safer way to expose the board for bit ops.. it's public (v2 - friend function)
     Bitboard board;
