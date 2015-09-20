@@ -9,7 +9,7 @@ const int NUM_PLAYERS = 2;
 enum NAMES { WHITE, BLACK };
 const int NUM_TYPES = 9;
 // the last $NUM_PLAYERS of TYPE enum should be named for all player groups
-enum TYPE { EMPTY, KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, ALLMINE, ALLTHEIRS };
+enum TYPE { EMPTY, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING, ALLMINE, ALLTHEIRS };
 
 class Board {
 public:
@@ -22,9 +22,9 @@ public:
         return pieces[player][type].size();
     }
     void replacePiece(NAMES, TYPE, int, Piece);
-    
+
+    void setMove(std::string s) { move = s; }
     std::string getMove() { return move; }
-    std::string getChessMove();
     std::string getMove() const { return move; }
     
     void setHeuristic(int h) { heuristic = h; heuristicSet = true; }

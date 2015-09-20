@@ -1,25 +1,40 @@
 #include "State.h"
 #include <iostream>
+#include <vector>
+#include <string>
+
+const int DEPTH = 3;
+const int UNSET = 999;
 
 
-// tried to do something to iterate through generateMoves() for each
-// ChessStrategy i have, by making an array of singletons...
-// not the best design pattern it turns out (fail)
-// v2 : solve programmatic strategy iteration
-void moves(Board& current, std::vector<Board>& possibilities) {
-    generatePawnMoves(current, possibilities);
-    //MoveKing::instance()->generateMoves(current, possibilities);
-    //MoveQueen::instance()->generateMoves(current, possibilities);
+void Tree (Board& startState) {
+    
+    int topH = State(startState, 1, UNSET);
+    
+    std::cout << "final heuristic at the top? " << topH;
 }
 
-int State (Board& currentBoard) {
+
+int State (Board& currentBoard, int level, int parentHeuristic) {
+    std::cout << "start of new state() at level " << level << "\n";
+    Piece all = currentBoard.getPiece(WHITE, ALLMINE, 0);
+    all.board = all.board | currentBoard.getPiece(BLACK, ALLMINE, 0).board;
+    all.debugPrintBoard();
+    std::cout << std::endl;
+    
+    int bestHeuristic = UNSET;
+    
+    // base case 1: node at cutoff depth
+    if (level == DEPTH) {
+        return heuristic(currentBoard);
+    }
+    
     std::vector<Board> possiblities;
-    int bestHeuristic = currentBoard.getHeuristic();
     
     // generate moves
     moves(currentBoard, possiblities);
     
-    // no moves, BASE CASE.  return heuristic
+    // base case : no possible moves, must be a leaf
     if (possiblities.size() == 0)
         return bestHeuristic;
     
@@ -28,83 +43,144 @@ int State (Board& currentBoard) {
     // call State(possiblities[i]);
     
     for (int i = 0; i < possiblities.size(); ++i) {
-        // <--- this should be where we compare heuristics
-        Location test = possiblities[i].getPiece(WHITE, PAWN, 0).locate();
+        if (bestHeuristic != UNSET) {
+            // minimax() comparing parentHeuristic + bestHeuristic
+        }
         std::cout << "possibility " << i << " exists.\n";
-        std::cout   << "(x,y) " << test.x << ", " << test.y << "\n";
+        bestHeuristic = State(possiblities[i], level + 1, bestHeuristic);
+        std::cout << "  move is: " << possiblities[i].getMove() << " with heuristic " << possiblities[i].getHeuristic() << std::endl;
     }
     
     return 1;
 }
 
-void Tree (Board& startState) {
 
-    State(startState);
+// tried to do something to iterate through generateMoves() for each
+// ChessStrategy i have, by making an array of singletons...
+// not the best design pattern it turns out (fail)
+// v2 : solve programmatic strategy iteration
+void moves(Board& current, std::vector<Board>& possibilities) {
+    generatePawnMoves(current, possibilities);
+    generateKingMoves(current, possibilities);
+    //MoveQueen::instance()->generateMoves(current, possibilities);
 }
 
-void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
-    std::cout << "generatePawnMoves() \n";
 
-//    Piece all = game.getPiece(game.getPlayer(), ALLMINE, 0);
-//    std::cout << "all moves: \n";
-//    all.debugPrintBoard();
+int heuristic(Board& currentBoard) {
+    std::vector<int> players (2,0);
+    for (int i = 0; i < NUM_PLAYERS; ++i) {                     // players
+        for (int j = 1; j < NUM_TYPES - NUM_PLAYERS; ++j) {     // types
+            int weightedValue = (int) currentBoard.getPieceCount((NAMES) i, (TYPE) j);
+            for (int k = 0; k < (int) j; ++k) {
+                weightedValue *= 2;
+            }
+            players[i] += weightedValue;
+        }
+    }
+    return players[0] - players[1];
+}
+
+
+void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
     
     size_t numPawns = game.getPieceCount(game.getPlayer(), PAWN);
-    int direction;
+    int moveDirection;
     if (game.getPlayer() == WHITE) {
-        direction = 1;
+        moveDirection = 1;
     } else {
-        direction = -1;
+        moveDirection = -1;
     }
-    
-//    std::cout << "before outer for loop in generatePawnMoves() \n";
-    Piece test3 = game.getPiece(game.getPlayer(), ALLMINE, 0);
-    test3.debugPrintBoard();
     
     for (int i = 0; i < numPawns; ++i) {
         NAMES thisGuy = game.getPlayer();
         Piece thisPiece = game.getPiece(thisGuy, PAWN, i);
         Location current = thisPiece.locate();
         
-//        std::cout << "before inner for loop in generatePawnMoves() \n";
-//        Piece test2 = game.getPiece(game.getPlayer(), ALLMINE, 0);
-//        test2.debugPrintBoard();
-        
         // pawn can move diag left, up, diag right
         for (int j = -1; j < 2; ++j) {
+            
+            // - setup for testing move validity -
+            
             Location newPos = current;
             newPos.x += j;
-            newPos.y += direction;
+            newPos.y += moveDirection;
             Piece move(newPos.x, newPos.y);
-            //std::cout << "trying out a new move... \n";
-            //move.debugPrintBoard();
+            bool invalidAttack = false;
+            
+            if (j != 0) {
+                // attack - test for opponent
+                Piece opponent = game.getPiece(WHITE,ALLTHEIRS,0);
+                if ((move.board | opponent.board) != opponent.board) {
+                    // attack didn't attack opponent
+                    invalidAttack = true;
+                }
+            }
             
             // since we are using x,y, a bad move is a simple check
             // also check that we aren't writing over a 'buddy'
-            
-            
-            std::cout << "before noBuddies call \n";
-            Piece all = game.getPiece(game.getPlayer(), ALLMINE, 0);
-            all.debugPrintBoard();
-            
-            if (isOnBoard(newPos) && noBuddies(game, PAWN, move)) {
-//                std::cout << "if (isOnBoard(newPos) && noBuddies(game, PAWN, move)) => true \n";
+            if (isOnBoard(newPos) && noBuddies(game, PAWN, move) && !(invalidAttack)) {
                 Board temp = game;
                 temp.replacePiece(game.getPlayer(), PAWN, i, move);
                 
-                // <--- write new move function needed here
+                Location oldPos = game.getPiece(thisGuy, PAWN, i).locate();
+                Location newPos = temp.getPiece(thisGuy, PAWN, i).locate();
+                temp.setMove(getChessNotation(KING, oldPos.x, oldPos.y, newPos.x, newPos.y));
                 
                 // <--- not setting heuristic but we need the MOVE string
-                
-//                Piece seeAll = temp.getPiece(WHITE, ALLMINE, 0);
-//                seeAll.debugPrintBoard();
-                
+
                 possibilities.push_back(temp);
-//                std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
+                std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
             }
         }
     }
 }
+
+void generateKingMoves(Board& game, std::vector<Board>& possibilities) {
+    
+    size_t numKings = game.getPieceCount(game.getPlayer(), KING);
+    
+    for (int i = 0; i < numKings; ++i) {
+        NAMES thisGuy = game.getPlayer();
+        Piece thisPiece = game.getPiece(thisGuy, KING, i);
+        Location current = thisPiece.locate();
+        
+        // king can move 1 in any direction
+        for (int x = -1; x < 2; ++x) {
+            for (int y = -1; y < 2; ++y) {
+                // - setup for testing move validity -
+                
+                Location newPos = current;
+                newPos.x += x;
+                newPos.y += y;
+                Piece move(newPos.x, newPos.y);
+//                bool invalidAttack = false;
+//                
+//                Piece opponent = game.getPiece(WHITE,ALLTHEIRS,0);
+//                if ((move.board | opponent.board) != opponent.board) {
+//                    // attack didn't attack opponent
+//                    invalidAttack = true;
+//                }
+                
+                // since we are using x,y, a bad move is a simple check
+                // also check that we aren't writing over a 'buddy'
+                if (isOnBoard(newPos) && noBuddies(game, KING, move) && ((x + y) != 0)) {
+                    Board temp = game;
+                    temp.replacePiece(game.getPlayer(), KING, i, move);
+                    
+                    Location oldPos = game.getPiece(thisGuy, KING, i).locate();
+                    Location newPos = temp.getPiece(thisGuy, KING, i).locate();
+                    temp.setMove(getChessNotation(KING, oldPos.x, oldPos.y, newPos.x, newPos.y));
+                    
+                    // <--- not setting heuristic but we need the MOVE string
+                    
+                    possibilities.push_back(temp);
+                    std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
+                }
+            }
+        }
+    }
+}
+
 
 bool isOnBoard(Location here) {
     if (here.x < 0 || here.x >= 8 || here.y < 0 || here.y >= 8)
@@ -113,14 +189,9 @@ bool isOnBoard(Location here) {
 }
 
 bool noBuddies(Board& board, TYPE t, Piece m) {
-    std::cout << "in noBuddies call \n";
+    //std::cout << "in noBuddies call \n";
     Piece all = board.getPiece(board.getPlayer(), ALLMINE, 0);
-    all.debugPrintBoard();
-//    std::cout << "current player: " << board.getPlayer() << "\n";
-//    std::cout << "all moves: \n";
-//    all.debugPrintBoard();
-//    std::cout << "new move: \n";
-//    m.debugPrintBoard();
+
     // taking the OR of the future move and the current should be > just the current
     // UNLESS the move ends up illegally stepping on a member of this team, which we
     // want to say would disrupt their list of 'buddies'
@@ -164,4 +235,15 @@ char getPieceChar(TYPE t) {
             return '?';
     }
     
+}
+
+std::string getChessNotation(TYPE t, int x1, int y1, int x2, int y2) {
+    std::string output;
+    output.push_back(getPieceChar(t));
+    output.push_back(97 + x1);
+    output.push_back(49 + y1);
+    output.push_back('-');
+    output.push_back(97 + x2);
+    output.push_back(49 + y2);
+    return output;
 }

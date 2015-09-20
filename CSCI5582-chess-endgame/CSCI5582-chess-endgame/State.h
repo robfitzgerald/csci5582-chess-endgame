@@ -4,32 +4,24 @@
 #include <vector>
 #include "Board.h"
 
-// a State
-
-// is
-
-// this thing
-
-// that will blow your mind
-
-// because
-
-// mother nature's spirit invented it
-
-// it only exists to humor the creator
-
-// because
-
+// build the tree of possible moves
+void Tree (Board&);
+int State (Board&, int, int);
 void moves(Board&, std::vector<Board>&);
 
-int State (Board&);
+// minimax functions
+// minimax()
+int heuristic(Board&);
 
-void Tree (Board&);
-
+// move generators
 void generatePawnMoves(Board&, std::vector<Board>&);
+void generateKingMoves(Board&, std::vector<Board>&);
 
+
+// helper functions
 bool isOnBoard(Location);
-
 bool noBuddies(Board&, TYPE, Piece);
+char getPieceChar(TYPE);
+std::string getChessNotation(TYPE, int, int, int, int);
 
 #endif /* defined(__CSCI5582_chess_endgame__State__) */

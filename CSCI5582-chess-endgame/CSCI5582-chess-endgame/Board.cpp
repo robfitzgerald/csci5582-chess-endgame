@@ -30,13 +30,13 @@ Board::Board(const Board& source) {
         }
     }
     populateTeamBoards();
-    move = "";
+    move = source.move;
     heuristic = 0;
     heuristicSet = false;
 }
 
 void Board::populateTeamBoards() {
-    std::cout << "populate team boards called()" << std::endl;
+//    std::cout << "populate team boards called()" << std::endl;
     this->pieces[WHITE][ALLMINE][0].clear();
     this->pieces[WHITE][ALLTHEIRS][0].clear();
     this->pieces[BLACK][ALLMINE][0].clear();
@@ -46,17 +46,16 @@ void Board::populateTeamBoards() {
         size_t whitePc = pieces[WHITE][i].size();
         size_t blackPc = pieces[BLACK][i].size();
         for (int j = 0; j < whitePc; ++j) {
-            Location l = pieces[WHITE][i][j].locate();
-            std::cout << "this piece is at " << l.x << "," << l.y << "\n";
+//            Location l = pieces[WHITE][i][j].locate();
+//            std::cout << "this piece is at " << l.x << "," << l.y << "\n";
             pieces[WHITE][ALLMINE][0].board = pieces[WHITE][ALLMINE][0].board | pieces[WHITE][i][j].board;
             pieces[BLACK][ALLTHEIRS][0].board = pieces[BLACK][ALLTHEIRS][0].board | pieces[WHITE][i][j].board;
-            std::cout << "adding " << i << "th type, " << j << "th piece to white allboard." << std::endl;
-            std::cout << "looks like this now: " << pieces[WHITE][ALLMINE][0].board << std::endl;
-            pieces[WHITE][ALLMINE][0].debugPrintBoard();
+//            std::cout << "adding " << i << "th type, " << j << "th piece to white allboard." << std::endl;
+//            std::cout << "looks like this now: " << pieces[WHITE][ALLMINE][0].board << std::endl;
         }
         for (int j = 0; j < blackPc; ++j) {
-            pieces[BLACK][ALLMINE][0].board = pieces[BLACK][ALLMINE][0].board | pieces[WHITE][i][j].board;
-            pieces[WHITE][ALLTHEIRS][0].board = pieces[BLACK][ALLTHEIRS][0].board | pieces[BLACK][i][j].board;
+            pieces[BLACK][ALLMINE][0].board = pieces[BLACK][ALLMINE][0].board | pieces[BLACK][i][j].board;
+            pieces[WHITE][ALLTHEIRS][0].board = pieces[WHITE][ALLTHEIRS][0].board | pieces[BLACK][i][j].board;
         }
     }
 }
@@ -66,15 +65,6 @@ Piece& Board::exposeBoard(NAMES pl, TYPE t, int i) {
     return pieces[pl][t][i];
 }
 
-std::string Board::getChessMove() {
-    std::string output;
-    output.push_back(97 + move[0]);
-    output.push_back(1 + move[1]);
-    output.push_back(97 + move[2]);
-    output.push_back(1 + move[3]);
-    return output;
-}
-
 void Board::setPiece(NAMES pl, TYPE t, Piece pc) {
     //if (0 <= pl) // && pl < NUM_PLAYERS)
     pieces[pl][t].push_back(pc);
@@ -82,7 +72,8 @@ void Board::setPiece(NAMES pl, TYPE t, Piece pc) {
 }
 
 Piece Board::getPiece(NAMES pl, TYPE t, int index) {
-    Piece err(-1,-1);
+    Piece err(0,0);
+    err.legal = false;
     if (0 <= pl) // && pl < NUM_PLAYERS)
         if (0 <= index && index < pieces[pl][t].size()) {
             

@@ -15,18 +15,20 @@ void Piece::clear() { board = 0; }
 
 // returns success in storing piece location
 void Piece::place(int x, int y) {
-    if ( !((x + 8*y) > 63) && !((x + 8*y) < 0)) {               // only checking range
-        //std::cout << "this piece x,y: " << x << "," << y << std::endl;
+    int bitboardValue = x + (8*y);  // index in bitboard
+    if ( !(bitboardValue > 63) && !(bitboardValue < 0)) {
+        //std::cout << "Piece.place(): " << x << "," << y << std::endl;
         legal = true;
-        int index = x + (8*y);              // bitboard 'index'
         board = 1;                          // storing a bit is 2^index; start at 2^0 = 1
-        if (index != 0) {                   // if index was 0, we want board = 1 and be done
-            for (int i = 0; i < index; ++i) {
+        if (bitboardValue != 0) {
+            // if index was 0, we want board = 1 and be done
+            for (int i = 0; i < bitboardValue; ++i) {
                 board *= 2;
             }
         }
     } else {
         legal = false;
+        std::cout << "illegal move called by Piece.place(): " << x << "," << y << std::endl;
     }
 }
 
