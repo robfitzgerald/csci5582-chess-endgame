@@ -28,7 +28,7 @@ void Piece::place(int x, int y) {
         }
     } else {
         legal = false;
-        std::cout << "illegal move called by Piece.place(): " << x << "," << y << std::endl;
+        //std::cout << "illegal move called by Piece.place(): " << x << "," << y << std::endl;
     }
 }
 

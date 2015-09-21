@@ -10,7 +10,7 @@ int State (Board&, int, int);
 void moves(Board&, std::vector<Board>&);
 
 // minimax functions
-// minimax()
+bool applyCutoff(int, int, int);
 int heuristic(Board&);
 
 // move generators

@@ -3,9 +3,8 @@
 #include <vector>
 #include <string>
 
-const int DEPTH = 3;
+const int DEPTH = 4;
 const int UNSET = 999;
-
 
 void Tree (Board& startState) {
     
@@ -44,10 +43,23 @@ int State (Board& currentBoard, int level, int parentHeuristic) {
     
     for (int i = 0; i < possiblities.size(); ++i) {
         if (bestHeuristic != UNSET) {
-            // minimax() comparing parentHeuristic + bestHeuristic
+            // we have tried at least 1 possibility. we must check for alpha-beta cutoffs
+            if (applyCutoff(level, parentHeuristic, bestHeuristic)) {
+                std::cout << "cutoff at parent: " << parentHeuristic << ", child: " << bestHeuristic << ", level " << level << std::endl;
+                return bestHeuristic;
+            }
         }
-        std::cout << "possibility " << i << " exists.\n";
-        bestHeuristic = State(possiblities[i], level + 1, bestHeuristic);
+        
+        // else this is the first time evaluating a possibility.
+        //   set result of calling State()
+        
+        int childHeuristic = State(possiblities[i], level + 1, bestHeuristic);
+        if ((level & 2) == 0) {
+            bestHeuristic = ((childHeuristic > bestHeuristic) ? childHeuristic : bestHeuristic);
+        } else {
+            bestHeuristic = ((childHeuristic < bestHeuristic) ? childHeuristic : bestHeuristic);
+        }
+        //std::cout << "possibility " << i << " exists.\n";
         std::cout << "  move is: " << possiblities[i].getMove() << " with heuristic " << possiblities[i].getHeuristic() << std::endl;
     }
     
@@ -78,6 +90,21 @@ int heuristic(Board& currentBoard) {
         }
     }
     return players[0] - players[1];
+}
+
+
+bool applyCutoff(int level, int parent, int child) {
+    int childPlayer = (level + 1) % 2;
+    if (childPlayer == 1) {             // start state player is odd, we maximize them
+        if (child < parent) {           // parent is the
+            return true;
+        }
+    } else {
+        if (parent < child) {
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -129,7 +156,7 @@ void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
                 // <--- not setting heuristic but we need the MOVE string
 
                 possibilities.push_back(temp);
-                std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
+                //std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
             }
         }
     }
@@ -174,7 +201,7 @@ void generateKingMoves(Board& game, std::vector<Board>& possibilities) {
                     // <--- not setting heuristic but we need the MOVE string
                     
                     possibilities.push_back(temp);
-                    std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
+                    //std::cout << "added one to possibilities, now has size(): " << possibilities.size() << std::endl;
                 }
             }
         }
