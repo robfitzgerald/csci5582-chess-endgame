@@ -56,6 +56,15 @@ void pawnMoves(std::vector<Board>& possibles, Board b, Piece* p)
 		Board temp = b;
 		Piece* toMove = temp.refByPosition(p->getPos());
 		bool moveSuccess = temp.move(toMove,goodMoves[i]);
+		temp.setMoveName(
+			getChessNotation(
+				p->getType(),
+				p->getPos() % 8,
+				p->getPos() / 8,
+				goodMoves[i] % 8,
+				goodMoves[i] / 8
+				)
+			);
 		
 		if (moveSuccess && goodMoves[i] == nextVerticalStep)
 		{
@@ -108,7 +117,18 @@ void queenMoves(std::vector<Board>& possibles, Board b, Piece* p)
 		Board temp = b;
 		Piece* toMove = temp.refByPosition(p->getPos());
 		if (temp.move(toMove,goodMoves[i]))
+		{
+			temp.setMoveName(
+				getChessNotation(
+					p->getType(),
+					p->getPos() % 8,
+					p->getPos() / 8,
+					goodMoves[i] % 8,
+					goodMoves[i] / 8
+					)
+				);
 			possibles.push_back(temp);
+		}
 	}
 }
 
@@ -145,13 +165,24 @@ void kingMoves(std::vector<Board>& possibles, Board b, Piece* p)
 				Board temp = b;
 				Piece* toMove = temp.refByPosition(p->getPos());
 				if (temp.move(toMove,validStep))
+				{
+					temp.setMoveName(
+						getChessNotation(
+							p->getType(),
+							p->getPos() % 8,
+							p->getPos() / 8,
+							validStep % 8,
+							validStep / 8
+							)
+						);
 					possibles.push_back(temp);
+				}
 			}
 		}
 	}
 }
 
-/*char getPieceChar(TYPE t) {
+char getPieceChar(TYPE t) {
     switch(t) {
         case EMPTY:
             return ' ';
@@ -174,16 +205,9 @@ void kingMoves(std::vector<Board>& possibles, Board b, Piece* p)
         case PAWN:
             return 'P';
             break;
-        case ALLMINE:
-            return '>';
-            break;
-        case ALLTHEIRS:
-            return '<';
-            break;
         default:
             return '?';
-    }
-    
+    }   
 }
 
 std::string getChessNotation(TYPE t, int x1, int y1, int x2, int y2) {
@@ -195,5 +219,5 @@ std::string getChessNotation(TYPE t, int x1, int y1, int x2, int y2) {
     output.push_back(97 + x2);
     output.push_back(49 + y2);
     return output;
-}*/
+}
 

@@ -21,9 +21,13 @@ public:
 	int numPieces() const;
 	Bitboard boardByPiece(int);
 	bool move(Piece*,int);
-	std::string moveName;
 	void debugListPieces();
+	void setMoveName(std::string s) { moveName = s; }
+	std::string getMoveName() const { return moveName; }
+	std::string displayBoardPieces();
+	std::string getChessPosition(TYPE,int,int);
 private:
+	std::string moveName;
 	bool deleteEnemyAtPosition(Piece);
 	bool checkNoFriendlies(Piece, int);
 	Piece& _find(int,TYPE);

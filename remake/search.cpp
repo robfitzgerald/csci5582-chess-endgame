@@ -1,11 +1,11 @@
 #include "search.h"
+#include <iomanip>
 
 int search(Board b, int maxDepth)
 {
-	std::string headMove = "";
-	searchNode* head = new searchNode(b,headMove);
+	searchNode* head = new searchNode(b);
 	int topHeurisic = _search(head,maxDepth,0,UNSET);
-	print(head);
+	printTree(head);
 	return topHeurisic;
 }
 
@@ -25,14 +25,13 @@ int _search(searchNode* thisNode, const int maxDepth, int depth, int parentHeuri
 	int bestHeuristic = UNSET;
 	for (int p = 0; p < possibles.size(); ++p)
 	{
-		std::string newMoveName = "";
-		searchNode* newNode = new searchNode(possibles[p],newMoveName);
+		//std::cout << "depth " << depth << " trying possibles[" << p << "] whose move is " << possibles[p].getMoveName() << "\n";
+		searchNode* newNode = new searchNode(possibles[p]);
 		thisNode->addChild(newNode);
+		//std::cout << "newNode should match possibles[p] move name: " << newNode->getMoveName() << "\n";
 		int childHeuristic = _search(newNode,maxDepth,depth+1,bestHeuristic);
 		newNode->setHeuristic(childHeuristic);
-		//std::cout << "childHeuristic = " << newNode->getHeuristic() << "\n";
 		updateBestHeuristic(currentPlayer, bestHeuristic, childHeuristic);
-		//std::cout << "depth " << depth << " bestHeuristic is now " << bestHeuristic << " and parentHeuristic is " << parentHeuristic << "\n";
 		if (parentHeuristic != UNSET) 
 		{
 			if (
@@ -40,7 +39,8 @@ int _search(searchNode* thisNode, const int maxDepth, int depth, int parentHeuri
 				(currentPlayer == 0 && bestHeuristic > parentHeuristic)
 				)
 			{
-				std::cout << "player: " << currentPlayer << " best: " << bestHeuristic << " parent: " << parentHeuristic << " -> cutoff applied.\n";
+				//std::cout << "player: " << currentPlayer << " best: " << bestHeuristic << " parent: " << parentHeuristic << " -> cutoff applied.\n";
+				thisNode->setCutoff(true);
 				break;
 			}
 		}
@@ -91,26 +91,36 @@ void updateBestHeuristic(int pl, int& bestH, int newH)
 	}
 }
 
-void print(searchNode* head)
+void printTree(searchNode* head)
 {
-	_print(head, 0);
+	std::cout << "player depth  heuristic    move                board\n";
+	_printTree(head, 0);
 }
 
-void _print(searchNode* node, int depth)
+void _printTree(searchNode* node, int depth)
 {
+	std::cout << std::left;
+	if ((depth % 2) == 0)
+		std::cout << "white  ";
+	else
+		std::cout << "black  ";
+	std::cout << std::setw(7) << depth;
+	std::string heuristicOutput;
+	heuristicOutput += std::to_string(node->getHeuristic());
+	if (node->hasCutoff())
+		heuristicOutput += " -cutoff-";
+	std::cout << std::setw(12) << heuristicOutput << "|";
+	std::string moveText;
+	for (int indent = 0; indent < depth; ++indent)
+	{
+		moveText += "  ";
+	}
+	moveText += node->getMoveName();
+	std::cout << std::setw(20) << moveText;
+	std::cout << node->prettyPrintBoard() << "\n";
 	for (int i = 0; i < node->numChildren(); ++i)
 	{
-		std::cout << "move " << depth << ", "; 
-		if ((depth % 2) == 0)
-			std::cout << "white ";
-		else
-			std::cout << "black ";
-		for (int indent = 0; indent < depth; ++indent)
-		{
-			std::cout << "  ";
-		}
-		std::cout << node->getMoveName() << " : " << node->getHeuristic() << "\n";
-		_print(node->getChild(i), depth+1);
+		_printTree(node->getChild(i), depth+1);
 	}
 }
 

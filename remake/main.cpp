@@ -31,7 +31,7 @@ int main()
 	// b.addPiece(b3);
 	// b.addPiece(b4);
 	b.debugListPieces();
-	int result = search(b,7);
+	int result = search(b,4);
 	std::cout << "best heuristic: " << result << "\n";	
 	return 0;
 }

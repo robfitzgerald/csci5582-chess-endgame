@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Board.h"
+#include "moves.h"
 
 // returns success in storing piece location
 
@@ -10,7 +11,7 @@ Board::Board(const Board& source)
     {
         this->pieces.push_back(source.copyPiece(i));
     }
-    this->moveName = source.moveName;
+    this->moveName = source.getMoveName();
 }
 
 Bitboard Board::boardByPiece(int pieceIndex) {
@@ -153,3 +154,30 @@ void Board::debugListPieces() {
     }
     std::cout << "\n\n";
 }
+
+std::string Board::displayBoardPieces() {
+    std::string output;
+    for (int i = 0; i < pieces.size(); ++i)
+    {
+        if (pieces[i].getPlayer() == 0)
+            output += "W:";
+        else
+            output += "B:";
+        output += getChessPosition(
+            pieces[i].getType(),
+            pieces[i].getPos() % 8,
+            pieces[i].getPos() / 8
+            );
+        output += " ";
+    }
+    return output;
+}
+
+std::string Board::getChessPosition(TYPE t, int x, int y) {
+    std::string output;
+    output.push_back(getPieceChar(t));
+    output.push_back(97 + x);
+    output.push_back(49 + y);
+    return output;
+}
+
