@@ -73,14 +73,12 @@ bool Board::move(Piece* moving, int newPos)
 {
     if (moving->getPos() == newPos) {
         // moving to same location is not valid.
-        std::cout << "invalid move to same pos\n";
         return false;
     }
     
     bool noFriendlies = checkNoFriendlies(*moving, newPos);
     if (!noFriendlies)
     {
-        std::cout << "in move(), failed noFriendlies check.\n";
         return false;        
     }
 
@@ -155,21 +153,3 @@ void Board::debugListPieces() {
     }
     std::cout << "\n\n";
 }
-
-/* from old incarat
-
-void Board::debugPrintBoard() {
-    Bitboard inc = 1;
-    for(int i = 0; i < 64; ++i) {
-        if ((i > 1) && ((i % 8) == 0)) {
-            std::cout << std::endl;
-        }
-        if(board & inc)
-            std::cout << " 1";
-        else
-            std::cout << " 0";
-        inc *= 2;
-
-    }
-    std::cout << std::endl;
-}*/

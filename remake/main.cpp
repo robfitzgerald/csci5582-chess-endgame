@@ -4,10 +4,10 @@
 #include "search.h"
 int main()
 {
-	Piece p (0,PAWN,3);
-	Piece q (0,KING,16);
-	Piece r (1,KING,13);
-	Piece s (1,PAWN,20);
+	Piece p (0,PAWN,31);
+	Piece q (0,KING,32);
+	Piece r (1,KING,38);
+	Piece s (1,PAWN,40);
 	// Piece w1 (1,PAWN,15);
 	// Piece w2 (1,PAWN,16);
 	// Piece w3 (1,PAWN,17);
@@ -31,7 +31,8 @@ int main()
 	// b.addPiece(b3);
 	// b.addPiece(b4);
 	b.debugListPieces();
-	search(b,4);	
+	int result = search(b,7);
+	std::cout << "best heuristic: " << result << "\n";	
 	return 0;
 }
 

@@ -16,7 +16,6 @@ std::vector<Board> generateMoves(std::vector<Piece * > pieces, Board current)
 			case EMPTY:
 				break;
 			case PAWN:
-				std::cout << "PAWN\n";
 				pawnMoves(output,current,pieces[i]);
 				break;
 			case KNIGHT:
@@ -26,11 +25,9 @@ std::vector<Board> generateMoves(std::vector<Piece * > pieces, Board current)
 			case ROOK:
 				break;
 			case QUEEN:
-				std::cout << "QUEEN\n";
 				queenMoves(output,current,pieces[i]);
 				break;
 			case KING:
-				std::cout << "KING\n";
 				kingMoves(output,current,pieces[i]);
 				break;	
 		}
@@ -87,7 +84,6 @@ void pawnMoves(std::vector<Board>& possibles, Board b, Piece* p)
 			}
 		}
 	}
-	std::cout << "\n";
 }
 
 void queenMoves(std::vector<Board>& possibles, Board b, Piece* p)
@@ -154,3 +150,50 @@ void kingMoves(std::vector<Board>& possibles, Board b, Piece* p)
 		}
 	}
 }
+
+/*char getPieceChar(TYPE t) {
+    switch(t) {
+        case EMPTY:
+            return ' ';
+            break;
+        case KING:
+            return 'K';
+            break;
+        case QUEEN:
+            return 'Q';
+            break;
+        case BISHOP:
+            return 'B';
+            break;
+        case KNIGHT:
+            return 'K';
+            break;
+        case ROOK:
+            return 'R';
+            break;
+        case PAWN:
+            return 'P';
+            break;
+        case ALLMINE:
+            return '>';
+            break;
+        case ALLTHEIRS:
+            return '<';
+            break;
+        default:
+            return '?';
+    }
+    
+}
+
+std::string getChessNotation(TYPE t, int x1, int y1, int x2, int y2) {
+    std::string output;
+    output.push_back(getPieceChar(t));
+    output.push_back(97 + x1);
+    output.push_back(49 + y1);
+    output.push_back('-');
+    output.push_back(97 + x2);
+    output.push_back(49 + y2);
+    return output;
+}*/
+

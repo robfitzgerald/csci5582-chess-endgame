@@ -10,20 +10,36 @@ const int UNSET = 999;
 class searchNode
 {
 public:
-	searchNode(Board b, std::string m): state(b), moveName(m) {}
+	searchNode(Board b, std::string m): state(b), moveName(m) 
+	{
+		heuristic = UNSET;
+	}
 	void addChild (searchNode* add) { children.push_back(add); }
+	int numChildren () { return children.size(); }
+	searchNode* getChild(int i)
+	{
+		if (i >= 0 && i < children.size())
+			return children[i];
+		return 0;
+	}
 	Board getBoard() { return state; }
 	std::string getMoveName() { return moveName; }
+	void setHeuristic(int h) { heuristic = h; }
+	int getHeuristic() { return heuristic; }
 private:
 	std::vector<searchNode* > children;
 	Board state;
 	std::string moveName;
+	int heuristic;
 };
 
 int search(Board,int);
-int _search(searchNode*,const int,int);
+int _search(searchNode*,const int,int,int);
+void print(searchNode*);
+void _print(searchNode*,int);
 int simpleHeuristic(Board);
-void calculatePieceValue(int&, int);
+void calculatePieceValue(int&,int);
+void updateBestHeuristic(int,int&,int);
 
 #endif
 
