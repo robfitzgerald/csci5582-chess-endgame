@@ -22,6 +22,7 @@ public:
         return pieces[player][type].size();
     }
     void replacePiece(NAMES, TYPE, int, Piece);
+    void deletePiece(NAMES, TYPE, int);
 
     void setMove(std::string s) { move = s; }
     std::string getMove() { return move; }

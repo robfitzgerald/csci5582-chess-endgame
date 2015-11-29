@@ -90,7 +90,9 @@ void Board::replacePiece(NAMES n, TYPE t, int i, Piece mod) {
     populateTeamBoards();
 }
 
-
+void Board::deletePiece(NAMES n, TYPE t, int i) {
+    pieces[n][t].erase(pieces[n][t].begin() + (i - 1));
+}
 
 
 

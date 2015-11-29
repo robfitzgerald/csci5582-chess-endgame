@@ -3,23 +3,23 @@
 #include <vector>
 #include <string>
 
-const int DEPTH = 4;
+const int DEPTH = 9;
 const int UNSET = 999;
 
 void Tree (Board& startState) {
     
     int topH = State(startState, 1, UNSET);
     
-    std::cout << "final heuristic at the top? " << topH;
+    std::cout << "final heuristic at the top? " << topH << std::endl;
 }
 
 
 int State (Board& currentBoard, int level, int parentHeuristic) {
-    std::cout << "start of new state() at level " << level << "\n";
+    //std::cout << "start of new state() at level " << level << "\n";
     Piece all = currentBoard.getPiece(WHITE, ALLMINE, 0);
     all.board = all.board | currentBoard.getPiece(BLACK, ALLMINE, 0).board;
-    all.debugPrintBoard();
-    std::cout << std::endl;
+    //all.debugPrintBoard();
+    //std::cout << std::endl;
     
     int bestHeuristic = UNSET;
     
@@ -33,9 +33,10 @@ int State (Board& currentBoard, int level, int parentHeuristic) {
     // generate moves
     moves(currentBoard, possiblities);
     
-    // base case : no possible moves, must be a leaf
+    // base case 2: no possible moves, must be a leaf at any level
     if (possiblities.size() == 0)
-        return bestHeuristic;
+        //return bestHeuristic;
+        return heuristic(currentBoard);
     
     // for loop
     // call minimax() on Board.heuristic;
@@ -50,20 +51,26 @@ int State (Board& currentBoard, int level, int parentHeuristic) {
             }
         }
         
-        // else this is the first time evaluating a possibility.
         //   set result of calling State()
         
         int childHeuristic = State(possiblities[i], level + 1, bestHeuristic);
+        if (bestHeuristic == UNSET) {
+            bestHeuristic = childHeuristic;
+        }
         if ((level & 2) == 0) {
             bestHeuristic = ((childHeuristic > bestHeuristic) ? childHeuristic : bestHeuristic);
         } else {
             bestHeuristic = ((childHeuristic < bestHeuristic) ? childHeuristic : bestHeuristic);
         }
         //std::cout << "possibility " << i << " exists.\n";
-        std::cout << "  move is: " << possiblities[i].getMove() << " with heuristic " << possiblities[i].getHeuristic() << std::endl;
+        //std::cout << "  move is: " << possiblities[i].getMove() << " with heuristic " << possiblities[i].getHeuristic() << std::endl;
     }
-    
-    return 1;
+//    for (int i = 0; i < level; ++i)
+//    {
+//        std::cout << " ";
+//    }
+//    std::cout << "returning from State, bestHeuristic: " << bestHeuristic << "\n";
+    return bestHeuristic;
 }
 
 
@@ -83,17 +90,22 @@ int heuristic(Board& currentBoard) {
     for (int i = 0; i < NUM_PLAYERS; ++i) {                     // players
         for (int j = 1; j < NUM_TYPES - NUM_PLAYERS; ++j) {     // types
             int weightedValue = (int) currentBoard.getPieceCount((NAMES) i, (TYPE) j);
-            for (int k = 0; k < (int) j; ++k) {
+            for (int k = 0; k < j; ++k) {
                 weightedValue *= 2;
             }
             players[i] += weightedValue;
         }
     }
+    //std::cout << "leaving heuristic() with p0: " << players[0] << ", p1: " << players[1] << "\n";
     return players[0] - players[1];
 }
 
-
+// TODO: check this shit, it could be incorrect
 bool applyCutoff(int level, int parent, int child) {
+    if (parent == UNSET) {
+        // no parent heuristic, so we don't apply cutoff
+        return false;
+    }
     int childPlayer = (level + 1) % 2;
     if (childPlayer == 1) {             // start state player is odd, we maximize them
         if (child < parent) {           // parent is the
@@ -120,6 +132,8 @@ void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
     
     for (int i = 0; i < numPawns; ++i) {
         NAMES thisGuy = game.getPlayer();
+        NAMES otherGuy = (NAMES) (1 xor (int) thisGuy);
+        
         Piece thisPiece = game.getPiece(thisGuy, PAWN, i);
         Location current = thisPiece.locate();
         
@@ -140,6 +154,22 @@ void generatePawnMoves(Board& game, std::vector<Board>& possibilities) {
                 if ((move.board | opponent.board) != opponent.board) {
                     // attack didn't attack opponent
                     invalidAttack = true;
+                } else {
+                    // find the piece we attacked and delete it
+            
+                    for (int type = 1; type < NUM_TYPES; ++type) {
+                        for (int piece = 0; piece < game.getPieceCount(otherGuy,(TYPE) type); ++piece) {
+                            Location anotherPiece = game.getPiece(otherGuy,(TYPE) type,piece).locate();
+                            if (
+                                anotherPiece.x == newPos.x &&
+                                anotherPiece.y == newPos.y
+                                ) {
+                                std::cout << "found a match, will delete a piece.\n";
+                                game.deletePiece(otherGuy, (TYPE) type, piece);
+                            }
+                        }
+                    }
+                
                 }
             }
             

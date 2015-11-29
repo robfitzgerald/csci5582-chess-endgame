@@ -1,0 +1,35 @@
+plan
+
+what do i want, what do i need
+
+a way to represent a piece on a board
+which can just be by an index in an array
+
+a piece has
+	a player
+	a type
+	moves
+a board has
+	one to many pieces
+	a current player (stored as search_depth mod num_players)
+
+we need to do the following
+	instantiate a board
+	generate moves for the current player
+		store each generated move as it's own board, modified by the move and any implications of that move
+			such as attacks, pawn upgrades
+	for each move
+		// insert minimax check here
+		recurse on this move, store result as child_heuristic
+	return best_heuristic
+
+so a piece should have
+	a board with its location
+
+
+a board should have
+	addPiece
+	getPiece(player,type)
+	vector<Piece *> getPieces(player)
+	movePiece(Piece *)
+	
