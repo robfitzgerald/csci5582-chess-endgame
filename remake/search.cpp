@@ -6,6 +6,7 @@ int search(Board b, int maxDepth)
 	searchNode* head = new searchNode(b);
 	int topHeurisic = _search(head,maxDepth,0,UNSET);
 	printTree(head);
+	printBest(head);
 	return topHeurisic;
 }
 
@@ -124,11 +125,52 @@ void _printTree(searchNode* node, int depth)
 	}
 }
 
+void printBest(searchNode* head)
+{
+	std::cout << "best moves based on search results\n";
+	_printBest(head,0);
+}
 
+void _printBest(searchNode* node, int depth)
+{
+	std::string output;
+	searchNode* best = new searchNode(Board());
+	for (int i = 0; i < node->numChildren(); ++i)
+	{
+		//std::cout << "node->numChildren(): " << node->numChildren() << "\n";
+		determineBestChild(best,node->getChild(i),depth);
+	}
+	//std::cout << "best heuristic: " << best->getHeuristic() << "\n";
+	if (best->getHeuristic() == UNSET)
+		std::cout << "\n";
+	else 
+	{
+		for (int indent = 0; indent < depth; ++indent)
+		{
+			output += "  ";
+		}
+		output += best->getMoveName();
+		std::cout << output << "\n";
+		_printBest(best,depth+1);
+	}	
+}
 
-
-
-
+void determineBestChild(searchNode*& bestNode, searchNode* thisChild, int depth)
+{
+	int player = depth % 2;
+	if (bestNode->getHeuristic() == UNSET)
+	{
+		bestNode = thisChild;
+	}
+	else if (player == 0 && bestNode->getHeuristic() < thisChild->getHeuristic())
+	{
+		bestNode = thisChild;
+	}
+	else if (player == 1 && bestNode->getHeuristic() > thisChild->getHeuristic())
+	{
+		bestNode = thisChild;
+	}
+}
 
 
 

@@ -43,9 +43,13 @@ int search(Board,int);
 int _search(searchNode*,const int,int,int);
 void printTree(searchNode*);
 void _printTree(searchNode*,int);
+void printBest(searchNode*);
+void _printBest(searchNode*,int);
 int simpleHeuristic(Board);
 void calculatePieceValue(int&,int);
 void updateBestHeuristic(int,int&,int);
+void determineBestChild(searchNode*&,searchNode*,int);
+
 
 #endif
 

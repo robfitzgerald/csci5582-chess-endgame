@@ -1,6 +1,7 @@
 #include "moves.h"
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 const int UNSET = 999;
 const int BOARD_UPPER_BOUND = 64;
@@ -32,6 +33,14 @@ std::vector<Board> generateMoves(std::vector<Piece * > pieces, Board current)
 				break;	
 		}
 	}
+
+	// sort by 'priority function' - # players on board
+	// if less players on board, it's always better since we are 
+	// whomever we are generating moves for would hope to reduce
+	// the playing field. ;-)
+	std::sort(output.begin(), output.end(), [ ] (const Board& lhs, const Board& rhs) {
+		return lhs.numPieces() < rhs.numPieces();
+	});
 	return output;
 }
 
