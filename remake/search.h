@@ -49,9 +49,11 @@ private:
 int search(Board,int,int,int);
 int _search(searchNode*,const int,int,int);
 void printTree(searchNode*,int,int);
-void _printTree(searchNode*,int,std::vector<std::string>&);
+void _printTree(searchNode*,int,int);
 void printBest(searchNode*);
 void _printBest(searchNode*,int);
+void printOptimal(searchNode*,int,int);
+searchNode* _traverseBest(searchNode*,int,int);
 int simpleHeuristic(Board);
 void calculatePieceValue(int&,int);
 void updateBestHeuristic(int,int&,int);

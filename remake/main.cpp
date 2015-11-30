@@ -15,6 +15,8 @@ int main(int argc, char** argv)
 	else if (argc < 3)
 	{
 		depth = atoi(argv[1]);
+		m = 0;
+		n = depth;
 	}
 	else if (argc < 4)
 	{
