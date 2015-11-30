@@ -154,24 +154,27 @@ void printBest(searchNode* head)
 
 void _printBest(searchNode* node, int depth)
 {
-	std::string output;
 	searchNode* best = new searchNode(Board());
 	for (int i = 0; i < node->numChildren(); ++i)
 	{
-		//std::cout << "node->numChildren(): " << node->numChildren() << "\n";
 		determineBestChild(best,node->getChild(i),depth);
 	}
-	//std::cout << "best heuristic: " << best->getHeuristic() << "\n";
 	if (best->getHeuristic() == UNSET)
 		std::cout << "\n";
 	else 
 	{
-		for (int indent = 0; indent < depth; ++indent)
+		// for (int indent = 0; indent < depth; ++indent)
+		// {
+		// 	output += "  ";
+		// }
+		if ((depth % 2) == 0)
 		{
-			output += "  ";
+			std::cout << ((depth / 2) + 1) << ". " << best->getMoveName() << ", ";
 		}
-		output += best->getMoveName();
-		std::cout << output << "\n";
+		else 
+		{
+			std::cout << best->getMoveName() << "\n";
+		}
 		_printBest(best,depth+1);
 	}	
 }
