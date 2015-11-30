@@ -6,7 +6,9 @@ int search(Board b, int maxDepth, int m, int n)
 {
 	searchNode* head = new searchNode(b);
 	int topHeurisic = _search(head,maxDepth,0,UNSET);
-	printTree(head,m,n);
+	//printTree(head,m,n);
+	searchNode* nodeM = traverseOptimal(head,0,m);
+	// printNodesMThroughN(nodeM,n-m);
 	printBest(head);
 	return topHeurisic;
 }
@@ -175,6 +177,37 @@ void _printBest(searchNode* node, int depth)
 		std::cout << output << "\n";
 		_printBest(best,depth+1);
 	}	
+}
+
+searchNode* traverseOptimal(searchNode* node, int m, int n)
+{
+	searchNode* out = new searchNode(Board());
+	return out;
+}
+
+searchNode* _traverseOptimal(searchNode* node, int depth, int endDepth)
+{
+	if (!(depth == endDepth))
+	{
+		searchNode* best = new searchNode(Board());
+		for (int i = 0; i < node->numChildren(); ++i)
+		{
+			determineBestChild(best,node->getChild(i),depth);
+		}
+		if (!(best->getHeuristic() == UNSET))
+		{
+			return best;
+		}
+	}
+	return 0;
+}
+
+void printNodesMThroughN(searchNode* node,int steps)
+{
+	for (int i = 0; i < steps; ++i)
+	{
+		
+	}
 }
 
 void determineBestChild(searchNode*& bestNode, searchNode* thisChild, int depth)
