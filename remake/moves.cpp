@@ -9,6 +9,7 @@ const int BOARD_LOWER_BOUND = -1;
 
 std::vector<Board> generateMoves(std::vector<Piece * > pieces, Board current)
 {
+	
 	std::vector<Board> output;
 	for (int i = 0; i < pieces.size(); ++i)
 	{

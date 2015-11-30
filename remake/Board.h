@@ -14,23 +14,21 @@ public:
 	Board(){};
 	Board(const Board&);
 	void addPiece(Piece p) { pieces.push_back(p); }
-	Piece& getPiece(int, TYPE);
 	Piece copyPiece(int) const;
 	Piece* refByPosition(int);
 	std::vector<Piece *> getPieces(int);
 	int numPieces() const;
-	Bitboard boardByPiece(int);
 	bool move(Piece*,int);
 	void debugListPieces();
 	void setMoveName(std::string s) { moveName = s; }
 	std::string getMoveName() const { return moveName; }
 	std::string displayBoardPieces();
 	std::string getChessPosition(TYPE,int,int);
+	Piece* findPiece(int,TYPE);
 private:
 	std::string moveName;
 	bool deleteEnemyAtPosition(Piece);
 	bool checkNoFriendlies(Piece, int);
-	Piece& _find(int,TYPE);
 	std::vector<Piece> pieces;
 };
 

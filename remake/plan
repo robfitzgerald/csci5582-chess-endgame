@@ -33,3 +33,8 @@ a board should have
 	vector<Piece *> getPieces(player)
 	movePiece(Piece *)
 	
+
+
+WHAT'S LEFT
+	input M, N: to show moves by indices in range M..N
+	priority function: sort by heuristic before recursing

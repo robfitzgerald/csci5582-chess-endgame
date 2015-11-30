@@ -1,17 +1,21 @@
 #include "search.h"
 #include <iomanip>
 
-int search(Board b, int maxDepth)
+int search(Board b, int maxDepth, int m, int n)
 {
 	searchNode* head = new searchNode(b);
 	int topHeurisic = _search(head,maxDepth,0,UNSET);
-	printTree(head);
+	printTree(head,m,n);
 	printBest(head);
 	return topHeurisic;
 }
 
 int _search(searchNode* thisNode, const int maxDepth, int depth, int parentHeuristic)
 {
+	if (thisNode->anyKingsMissing())
+	{
+		return simpleHeuristic(thisNode->getBoard());
+	}
 	int currentPlayer = (depth % 2);
 	if (depth == maxDepth-1)
 	{
@@ -92,13 +96,14 @@ void updateBestHeuristic(int pl, int& bestH, int newH)
 	}
 }
 
-void printTree(searchNode* head)
+void printTree(searchNode* head, int m, int n)
 {
+	std::vector<std::string> displayNodes;
 	std::cout << "player depth  heuristic    move                board\n";
-	_printTree(head, 0);
+	_printTree(head, 0, displayNodes);
 }
 
-void _printTree(searchNode* node, int depth)
+void _printTree(searchNode* node, int depth, std::vector<std::string>& out)
 {
 	std::cout << std::left;
 	if ((depth % 2) == 0)
@@ -121,7 +126,7 @@ void _printTree(searchNode* node, int depth)
 	std::cout << node->prettyPrintBoard() << "\n";
 	for (int i = 0; i < node->numChildren(); ++i)
 	{
-		_printTree(node->getChild(i), depth+1);
+		_printTree(node->getChild(i), depth+1, out);
 	}
 }
 
@@ -171,9 +176,6 @@ void determineBestChild(searchNode*& bestNode, searchNode* thisChild, int depth)
 		bestNode = thisChild;
 	}
 }
-
-
-
 
 
 

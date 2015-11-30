@@ -2,6 +2,7 @@
 #define p1_remake_search_h
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Board.h"
 #include "moves.h"
 
@@ -31,6 +32,12 @@ public:
 	std::string prettyPrintBoard() { return state.displayBoardPieces(); }
 	void setCutoff(bool c) { alphaBetaCutoff = c; }
 	bool hasCutoff() { return alphaBetaCutoff; }
+	bool anyKingsMissing()
+	{
+		if ((state.findPiece(0,KING) == 0) || (state.findPiece(1,KING) == 0))
+			return true;
+		return false;
+	}
 private:
 	std::vector<searchNode* > children;
 	Board state;
@@ -39,10 +46,10 @@ private:
 	int heuristic;
 };
 
-int search(Board,int);
+int search(Board,int,int,int);
 int _search(searchNode*,const int,int,int);
-void printTree(searchNode*);
-void _printTree(searchNode*,int);
+void printTree(searchNode*,int,int);
+void _printTree(searchNode*,int,std::vector<std::string>&);
 void printBest(searchNode*);
 void _printBest(searchNode*,int);
 int simpleHeuristic(Board);

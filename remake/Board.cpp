@@ -14,26 +14,6 @@ Board::Board(const Board& source)
     this->moveName = source.getMoveName();
 }
 
-Bitboard Board::boardByPiece(int pieceIndex) {
-    assert(pieceIndex < pieces.size());
-    Piece p = pieces[pieceIndex];
-    int bitboardValue = p.getPos();
-    Bitboard board = 1;  // we will apply board^2 starting from 1 (2^0)
-    assert(bitboardValue < 64 && bitboardValue >= 0);
-    if (bitboardValue != 0) {
-        // if index was 0, we want board = 1 and be done
-        for (int i = 0; i < bitboardValue; ++i) {
-            board *= 2;
-        }
-    }
-    return board;
-}
-
-Piece& Board::getPiece(int player, TYPE type)
-{
-    return _find(player,type);
-}
-
 Piece Board::copyPiece(int i) const
 {
     return pieces[i];
@@ -132,7 +112,11 @@ bool Board::checkNoFriendlies(Piece thisPiece, int newPos)
     return true;
 }
 
-Piece& Board::_find(int player, TYPE type)
+// poorly implemented. next version should find more
+// ways to be certain you are getting the correct piece.
+// but, this will work for the only thing i need it for, which
+// is finding the king.
+Piece* Board::findPiece(int player, TYPE type)
 {
     for (int i = 0; i < pieces.size(); ++i)
     {
@@ -140,10 +124,9 @@ Piece& Board::_find(int player, TYPE type)
             pieces[i].getPlayer() == player &&
             pieces[i].getType() == type
             )
-            return pieces[i];
+            return &pieces[i];
     }
-    Piece * temp = new Piece(-1,EMPTY,0); 
-    return *temp;
+    return 0;
 }
 
 void Board::debugListPieces() {
