@@ -1,5 +1,6 @@
 #include "search.h"
 #include <iomanip>
+#include <sstream>
 
 int search(Board b, int maxDepth, int m, int n)
 {
@@ -99,31 +100,47 @@ void updateBestHeuristic(int pl, int& bestH, int newH)
 void printTree(searchNode* head, int m, int n)
 {
 	std::vector<std::string> displayNodes;
-	std::cout << "player depth  heuristic    move                board\n";
+	std::cout << "index   player depth  heuristic    move                board\n";
 	_printTree(head, 0, displayNodes);
+	if (
+		(m == 0 && n == 0) ||
+		(m > n) ||
+		(m < 0) ||
+		(n > displayNodes.size())
+		)
+	{
+		m = 0;
+		n = displayNodes.size();
+	}
+	for ( ; m < n; ++m)
+	{
+		std::cout << std::left << std::setw(8) << m <<displayNodes[m];
+	}
 }
 
 void _printTree(searchNode* node, int depth, std::vector<std::string>& out)
 {
-	std::cout << std::left;
+	std::ostringstream output;
+	output << std::left;
 	if ((depth % 2) == 0)
-		std::cout << "white  ";
+		output << "white  ";
 	else
-		std::cout << "black  ";
-	std::cout << std::setw(7) << depth;
+		output << "black  ";
+	output << std::setw(7) << depth;
 	std::string heuristicOutput;
 	heuristicOutput += std::to_string(node->getHeuristic());
 	if (node->hasCutoff())
 		heuristicOutput += " -cutoff-";
-	std::cout << std::setw(12) << heuristicOutput << "|";
+	output << std::setw(12) << heuristicOutput << "|";
 	std::string moveText;
 	for (int indent = 0; indent < depth; ++indent)
 	{
 		moveText += "  ";
 	}
 	moveText += node->getMoveName();
-	std::cout << std::setw(20) << moveText;
-	std::cout << node->prettyPrintBoard() << "\n";
+	output << std::setw(20) << moveText;
+	output << node->prettyPrintBoard() << "\n";
+	out.push_back(output.str());
 	for (int i = 0; i < node->numChildren(); ++i)
 	{
 		_printTree(node->getChild(i), depth+1, out);
