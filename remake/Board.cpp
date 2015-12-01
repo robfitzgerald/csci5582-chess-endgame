@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cctype>
 #include "Board.h"
 #include "moves.h"
 
@@ -163,4 +164,36 @@ std::string Board::getChessPosition(TYPE t, int x, int y) {
     output.push_back(49 + y);
     return output;
 }
+
+
+
+void Board::printBoard()
+{
+    std::cout << "\n";
+    for (int y = 7; y >= 0; --y)
+    {
+        for (int x = 0; x < 8; ++x)
+        {
+            int thisPos = (y*8)+x;
+            Piece* thisPiece = refByPosition(thisPos);
+            if (thisPiece != 0)
+            {
+                char c = getPieceChar(thisPiece->getType());
+                if (thisPiece->getPlayer() == 0)
+                    std::cout << (char) tolower(c);
+                else
+                    std::cout << c;
+            }
+            else if (((x % 2) != (y % 2)) == 0)
+                std::cout << "_";
+            else
+                std::cout << "x";
+            std::cout << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "\n";
+}
+
+
 

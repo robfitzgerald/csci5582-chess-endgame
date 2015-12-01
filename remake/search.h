@@ -38,6 +38,7 @@ public:
 			return true;
 		return false;
 	}
+	void printBoardImage() { state.printBoard(); }
 private:
 	std::vector<searchNode* > children;
 	Board state;

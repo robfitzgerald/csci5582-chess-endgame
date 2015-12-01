@@ -25,6 +25,7 @@ public:
 	std::string displayBoardPieces();
 	std::string getChessPosition(TYPE,int,int);
 	Piece* findPiece(int,TYPE);
+	void printBoard();
 private:
 	std::string moveName;
 	bool deleteEnemyAtPosition(Piece);
