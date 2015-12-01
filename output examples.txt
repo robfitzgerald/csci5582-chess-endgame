@@ -1,5 +1,7 @@
 Sample Output
 
+This program is finding solutions, in other words, it is ending up with values as close to zero for its heuristic function, as both players pick moves which optimize their score. It is also following the strategy of the R. Reti endgame, where White can push toward a draw by moving it's King toward the center of the board.
+
 ------------------------------
 Example 1: Suicidal White Pawn
 ------------------------------
@@ -7,7 +9,7 @@ Search Depth 2 turns (4 moves).
 White pawn moves from c6 to c8, gets promoted, and immediately taken by black King.
 Tree begins at end of move 1.
 
-Robert-Fitzgeralds-MacBook-Pro:remake robfitzgerald$ ./rreti 2 1 2
+Robert-Fitzgeralds-MacBook-Pro:csci5582-chess-endgame robfitzgerald$ ./rreti 2 1 2
 
 ** R.Reti Endgame Board **
 
@@ -20,55 +22,84 @@ _ x _ x _ x _ x
 x _ x _ x _ x _ 
 _ x _ x _ x _ x 
 
-best moves based on search results
+Total Moves In Search Tree: 603
 
-player depth  heuristic    move                board
-----------------------------------------------------
-black  2      -2          |  Ka6-b7            W:Pc7 W:Kh8 B:Kb7 B:Ph5 
-white  3      -2          |   Pc7-c8           W:Qc8 W:Kh8 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c8          W:Kh8 B:Kc8 B:Ph5 
-black  4      30          |    Kb7-b6          W:Qc8 W:Kh8 B:Kb6 B:Ph5 
-black  4      30          |    Kb7-c6          W:Qc8 W:Kh8 B:Kc6 B:Ph5 
-black  4      30          |    Kb7-a7          W:Qc8 W:Kh8 B:Ka7 B:Ph5 
-black  4      30          |    Kb7-c7          W:Qc8 W:Kh8 B:Kc7 B:Ph5 
-black  4      30          |    Kb7-a8          W:Qc8 W:Kh8 B:Ka8 B:Ph5 
-black  4      30          |    Kb7-b8          W:Qc8 W:Kh8 B:Kb8 B:Ph5 
-black  4      30          |    Kb7-a6          W:Qc8 W:Kh8 B:Ka6 B:Ph5 
-black  4      30          |    Ph5-h4          W:Qc8 W:Kh8 B:Kb7 B:Ph4 
-white  3      -2          |   Kh8-g7           W:Pc7 W:Kg7 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c7          W:Kg7 B:Kc7 B:Ph5 
-black  4      0           |    Kb7-b6          W:Pc7 W:Kg7 B:Kb6 B:Ph5 
-black  4      0           |    Kb7-c6          W:Pc7 W:Kg7 B:Kc6 B:Ph5 
-black  4      0           |    Kb7-a7          W:Pc7 W:Kg7 B:Ka7 B:Ph5 
-black  4      0           |    Kb7-a6          W:Pc7 W:Kg7 B:Ka6 B:Ph5 
-black  4      0           |    Kb7-a8          W:Pc7 W:Kg7 B:Ka8 B:Ph5 
-black  4      0           |    Kb7-b8          W:Pc7 W:Kg7 B:Kb8 B:Ph5 
-black  4      0           |    Kb7-c8          W:Pc7 W:Kg7 B:Kc8 B:Ph5 
-black  4      0           |    Ph5-h4          W:Pc7 W:Kg7 B:Kb7 B:Ph4 
-white  3      -2          |   Kh8-h7           W:Pc7 W:Kh7 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c7          W:Kh7 B:Kc7 B:Ph5 
-black  4      0           |    Kb7-b6          W:Pc7 W:Kh7 B:Kb6 B:Ph5 
-black  4      0           |    Kb7-c6          W:Pc7 W:Kh7 B:Kc6 B:Ph5 
-black  4      0           |    Kb7-a7          W:Pc7 W:Kh7 B:Ka7 B:Ph5 
-black  4      0           |    Kb7-a6          W:Pc7 W:Kh7 B:Ka6 B:Ph5 
-black  4      0           |    Kb7-a8          W:Pc7 W:Kh7 B:Ka8 B:Ph5 
-black  4      0           |    Kb7-b8          W:Pc7 W:Kh7 B:Kb8 B:Ph5 
-black  4      0           |    Kb7-c8          W:Pc7 W:Kh7 B:Kc8 B:Ph5 
-black  4      0           |    Ph5-h4          W:Pc7 W:Kh7 B:Kb7 B:Ph4 
-white  3      -2          |   Kh8-g8           W:Pc7 W:Kg8 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c7          W:Kg8 B:Kc7 B:Ph5 
-black  4      0           |    Kb7-b6          W:Pc7 W:Kg8 B:Kb6 B:Ph5 
-black  4      0           |    Kb7-c6          W:Pc7 W:Kg8 B:Kc6 B:Ph5 
-black  4      0           |    Kb7-a7          W:Pc7 W:Kg8 B:Ka7 B:Ph5 
-black  4      0           |    Kb7-a6          W:Pc7 W:Kg8 B:Ka6 B:Ph5 
-black  4      0           |    Kb7-a8          W:Pc7 W:Kg8 B:Ka8 B:Ph5 
-black  4      0           |    Kb7-b8          W:Pc7 W:Kg8 B:Kb8 B:Ph5 
-black  4      0           |    Kb7-c8          W:Pc7 W:Kg8 B:Kc8 B:Ph5 
-black  4      0           |    Ph5-h4          W:Pc7 W:Kg8 B:Kb7 B:Ph4 
+index player depth  heuristic    move                board
+----------------------------------------------------------
+64    black  2      -2          |  Ka6-b7            W:Pc7 W:Kh8 B:Kb7 B:Ph5 
+65    white  3      -2          |   Pc7-c8           W:Qc8 W:Kh8 B:Kb7 B:Ph5 
+66    black  4      -2          |    Kb7-c8          W:Kh8 B:Kc8 B:Ph5 
+67    black  4      30          |    Kb7-b6          W:Qc8 W:Kh8 B:Kb6 B:Ph5 
+68    black  4      30          |    Kb7-c6          W:Qc8 W:Kh8 B:Kc6 B:Ph5 
+69    black  4      30          |    Kb7-a7          W:Qc8 W:Kh8 B:Ka7 B:Ph5 
+70    black  4      30          |    Kb7-c7          W:Qc8 W:Kh8 B:Kc7 B:Ph5 
+71    black  4      30          |    Kb7-a8          W:Qc8 W:Kh8 B:Ka8 B:Ph5 
+72    black  4      30          |    Kb7-b8          W:Qc8 W:Kh8 B:Kb8 B:Ph5 
+73    black  4      30          |    Kb7-a6          W:Qc8 W:Kh8 B:Ka6 B:Ph5 
+74    black  4      30          |    Ph5-h4          W:Qc8 W:Kh8 B:Kb7 B:Ph4 
+75    white  3      -2          |   Kh8-g7           W:Pc7 W:Kg7 B:Kb7 B:Ph5 
+76    black  4      -2          |    Kb7-c7          W:Kg7 B:Kc7 B:Ph5 
+77    black  4      0           |    Kb7-b6          W:Pc7 W:Kg7 B:Kb6 B:Ph5 
+78    black  4      0           |    Kb7-c6          W:Pc7 W:Kg7 B:Kc6 B:Ph5 
+79    black  4      0           |    Kb7-a7          W:Pc7 W:Kg7 B:Ka7 B:Ph5 
+80    black  4      0           |    Kb7-a6          W:Pc7 W:Kg7 B:Ka6 B:Ph5 
+81    black  4      0           |    Kb7-a8          W:Pc7 W:Kg7 B:Ka8 B:Ph5 
+82    black  4      0           |    Kb7-b8          W:Pc7 W:Kg7 B:Kb8 B:Ph5 
+83    black  4      0           |    Kb7-c8          W:Pc7 W:Kg7 B:Kc8 B:Ph5 
+84    black  4      0           |    Ph5-h4          W:Pc7 W:Kg7 B:Kb7 B:Ph4 
+85    white  3      -2          |   Kh8-h7           W:Pc7 W:Kh7 B:Kb7 B:Ph5 
+86    black  4      -2          |    Kb7-c7          W:Kh7 B:Kc7 B:Ph5 
+87    black  4      0           |    Kb7-b6          W:Pc7 W:Kh7 B:Kb6 B:Ph5 
+88    black  4      0           |    Kb7-c6          W:Pc7 W:Kh7 B:Kc6 B:Ph5 
+89    black  4      0           |    Kb7-a7          W:Pc7 W:Kh7 B:Ka7 B:Ph5 
+90    black  4      0           |    Kb7-a6          W:Pc7 W:Kh7 B:Ka6 B:Ph5 
+91    black  4      0           |    Kb7-a8          W:Pc7 W:Kh7 B:Ka8 B:Ph5 
+92    black  4      0           |    Kb7-b8          W:Pc7 W:Kh7 B:Kb8 B:Ph5 
+93    black  4      0           |    Kb7-c8          W:Pc7 W:Kh7 B:Kc8 B:Ph5 
+94    black  4      0           |    Ph5-h4          W:Pc7 W:Kh7 B:Kb7 B:Ph4 
+95    white  3      -2          |   Kh8-g8           W:Pc7 W:Kg8 B:Kb7 B:Ph5 
+96    black  4      -2          |    Kb7-c7          W:Kg8 B:Kc7 B:Ph5 
+97    black  4      0           |    Kb7-b6          W:Pc7 W:Kg8 B:Kb6 B:Ph5 
+98    black  4      0           |    Kb7-c6          W:Pc7 W:Kg8 B:Kc6 B:Ph5 
+99    black  4      0           |    Kb7-a7          W:Pc7 W:Kg8 B:Ka7 B:Ph5 
+100   black  4      0           |    Kb7-a6          W:Pc7 W:Kg8 B:Ka6 B:Ph5 
+101   black  4      0           |    Kb7-a8          W:Pc7 W:Kg8 B:Ka8 B:Ph5 
+102   black  4      0           |    Kb7-b8          W:Pc7 W:Kg8 B:Kb8 B:Ph5 
+103   black  4      0           |    Kb7-c8          W:Pc7 W:Kg8 B:Kc8 B:Ph5 
+104   black  4      0           |    Ph5-h4          W:Pc7 W:Kg8 B:Kb7 B:Ph4 
+best moves based on search results
 1. Pc6-c7, Ka6-b7
+
+x _ x _ x _ x k 
+_ x p x _ x _ x 
+K _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
+
+x _ x _ x _ x k 
+_ K p x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
 2. Pc7-c8, Kb7-c8
 
-** Result **
+x _ q _ x _ x k 
+_ K _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
 
 x _ K _ x _ x k 
 _ x _ x _ x _ x 
@@ -187,8 +218,7 @@ Search Depth of 3 Turns (6 Moves).
 Many subtrees ignored thanks to alpha-beta cutoffs.
 Tree begins at end of turn 1 and shows remarkable amount of cutoffs between 1 and 2.
 
-
-Robert-Fitzgeralds-MacBook-Pro:remake robfitzgerald$ ./rreti 3 1 2
+Robert-Fitzgeralds-MacBook-Pro:csci5582-chess-endgame robfitzgerald$ ./rreti 3 1 2
 
 ** R.Reti Endgame Board **
 
@@ -201,56 +231,105 @@ _ x _ x _ x _ x
 x _ x _ x _ x _ 
 _ x _ x _ x _ x 
 
-best moves based on search results
+Total Moves In Search Tree: 18431
 
-player depth  heuristic    move                board
-----------------------------------------------------
-black  2      -2          |  Ka6-b7            W:Pc7 W:Kh8 B:Kb7 B:Ph5 
-white  3      -2          |   Pc7-c8           W:Qc8 W:Kh8 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c8          W:Kh8 B:Kc8 B:Ph5 
-black  4      30 -cutoff- |    Kb7-b6          W:Qc8 W:Kh8 B:Kb6 B:Ph5 
-black  4      94 -cutoff- |    Kb7-c6          W:Qc8 W:Kh8 B:Kc6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a7          W:Qc8 W:Kh8 B:Ka7 B:Ph5 
-black  4      94 -cutoff- |    Kb7-c7          W:Qc8 W:Kh8 B:Kc7 B:Ph5 
-black  4      94 -cutoff- |    Kb7-a8          W:Qc8 W:Kh8 B:Ka8 B:Ph5 
-black  4      94 -cutoff- |    Kb7-b8          W:Qc8 W:Kh8 B:Kb8 B:Ph5 
-black  4      94 -cutoff- |    Kb7-a6          W:Qc8 W:Kh8 B:Ka6 B:Ph5 
-black  4      94 -cutoff- |    Ph5-h4          W:Qc8 W:Kh8 B:Kb7 B:Ph4 
-white  3      -2          |   Kh8-g7           W:Pc7 W:Kg7 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c7          W:Kg7 B:Kc7 B:Ph5 
-black  4      30 -cutoff- |    Kb7-b6          W:Pc7 W:Kg7 B:Kb6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-c6          W:Pc7 W:Kg7 B:Kc6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a7          W:Pc7 W:Kg7 B:Ka7 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a6          W:Pc7 W:Kg7 B:Ka6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a8          W:Pc7 W:Kg7 B:Ka8 B:Ph5 
-black  4      94 -cutoff- |    Kb7-b8          W:Pc7 W:Kg7 B:Kb8 B:Ph5 
-black  4      -2          |    Kb7-c8          W:Pc7 W:Kg7 B:Kc8 B:Ph5 
-black  4      -2          |    Ph5-h4          W:Pc7 W:Kg7 B:Kb7 B:Ph4 
-white  3      -2          |   Kh8-h7           W:Pc7 W:Kh7 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c7          W:Kh7 B:Kc7 B:Ph5 
-black  4      30 -cutoff- |    Kb7-b6          W:Pc7 W:Kh7 B:Kb6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-c6          W:Pc7 W:Kh7 B:Kc6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a7          W:Pc7 W:Kh7 B:Ka7 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a6          W:Pc7 W:Kh7 B:Ka6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a8          W:Pc7 W:Kh7 B:Ka8 B:Ph5 
-black  4      94 -cutoff- |    Kb7-b8          W:Pc7 W:Kh7 B:Kb8 B:Ph5 
-black  4      -2          |    Kb7-c8          W:Pc7 W:Kh7 B:Kc8 B:Ph5 
-black  4      -2          |    Ph5-h4          W:Pc7 W:Kh7 B:Kb7 B:Ph4 
-white  3      -2          |   Kh8-g8           W:Pc7 W:Kg8 B:Kb7 B:Ph5 
-black  4      -2          |    Kb7-c7          W:Kg8 B:Kc7 B:Ph5 
-black  4      30 -cutoff- |    Kb7-b6          W:Pc7 W:Kg8 B:Kb6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-c6          W:Pc7 W:Kg8 B:Kc6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a7          W:Pc7 W:Kg8 B:Ka7 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a6          W:Pc7 W:Kg8 B:Ka6 B:Ph5 
-black  4      30 -cutoff- |    Kb7-a8          W:Pc7 W:Kg8 B:Ka8 B:Ph5 
-black  4      94 -cutoff- |    Kb7-b8          W:Pc7 W:Kg8 B:Kb8 B:Ph5 
-black  4      -2          |    Kb7-c8          W:Pc7 W:Kg8 B:Kc8 B:Ph5 
-black  4      -2          |    Ph5-h4          W:Pc7 W:Kg8 B:Kb7 B:Ph4 
+index player depth  heuristic    move                board
+----------------------------------------------------------
+4549  black  2      -2          |  Ka6-b7            W:Pc7 W:Kh8 B:Kb7 B:Ph5 
+4550  white  3      -2          |   Pc7-c8           W:Qc8 W:Kh8 B:Kb7 B:Ph5 
+4551  black  4      -2          |    Kb7-c8          W:Kh8 B:Kc8 B:Ph5 
+4573  black  4      30 -cutoff- |    Kb7-b6          W:Qc8 W:Kh8 B:Kb6 B:Ph5 
+4634  black  4      94 -cutoff- |    Kb7-c6          W:Qc8 W:Kh8 B:Kc6 B:Ph5 
+4636  black  4      30 -cutoff- |    Kb7-a7          W:Qc8 W:Kh8 B:Ka7 B:Ph5 
+4658  black  4      94 -cutoff- |    Kb7-c7          W:Qc8 W:Kh8 B:Kc7 B:Ph5 
+4660  black  4      94 -cutoff- |    Kb7-a8          W:Qc8 W:Kh8 B:Ka8 B:Ph5 
+4662  black  4      94 -cutoff- |    Kb7-b8          W:Qc8 W:Kh8 B:Kb8 B:Ph5 
+4664  black  4      94 -cutoff- |    Kb7-a6          W:Qc8 W:Kh8 B:Ka6 B:Ph5 
+4666  black  4      94 -cutoff- |    Ph5-h4          W:Qc8 W:Kh8 B:Kb7 B:Ph4 
+4668  white  3      -2          |   Kh8-g7           W:Pc7 W:Kg7 B:Kb7 B:Ph5 
+4669  black  4      -2          |    Kb7-c7          W:Kg7 B:Kc7 B:Ph5 
+4750  black  4      30 -cutoff- |    Kb7-b6          W:Pc7 W:Kg7 B:Kb6 B:Ph5 
+4761  black  4      30 -cutoff- |    Kb7-c6          W:Pc7 W:Kg7 B:Kc6 B:Ph5 
+4772  black  4      30 -cutoff- |    Kb7-a7          W:Pc7 W:Kg7 B:Ka7 B:Ph5 
+4780  black  4      30 -cutoff- |    Kb7-a6          W:Pc7 W:Kg7 B:Ka6 B:Ph5 
+4788  black  4      30 -cutoff- |    Kb7-a8          W:Pc7 W:Kg7 B:Ka8 B:Ph5 
+4794  black  4      94 -cutoff- |    Kb7-b8          W:Pc7 W:Kg7 B:Kb8 B:Ph5 
+4796  black  4      -2          |    Kb7-c8          W:Pc7 W:Kg7 B:Kc8 B:Ph5 
+4853  black  4      -2          |    Ph5-h4          W:Pc7 W:Kg7 B:Kb7 B:Ph4 
+4944  white  3      -2          |   Kh8-h7           W:Pc7 W:Kh7 B:Kb7 B:Ph5 
+4945  black  4      -2          |    Kb7-c7          W:Kh7 B:Kc7 B:Ph5 
+4996  black  4      30 -cutoff- |    Kb7-b6          W:Pc7 W:Kh7 B:Kb6 B:Ph5 
+5007  black  4      30 -cutoff- |    Kb7-c6          W:Pc7 W:Kh7 B:Kc6 B:Ph5 
+5018  black  4      30 -cutoff- |    Kb7-a7          W:Pc7 W:Kh7 B:Ka7 B:Ph5 
+5026  black  4      30 -cutoff- |    Kb7-a6          W:Pc7 W:Kh7 B:Ka6 B:Ph5 
+5034  black  4      30 -cutoff- |    Kb7-a8          W:Pc7 W:Kh7 B:Ka8 B:Ph5 
+5040  black  4      94 -cutoff- |    Kb7-b8          W:Pc7 W:Kh7 B:Kb8 B:Ph5 
+5042  black  4      -2          |    Kb7-c8          W:Pc7 W:Kh7 B:Kc8 B:Ph5 
+5078  black  4      -2          |    Ph5-h4          W:Pc7 W:Kh7 B:Kb7 B:Ph4 
+5139  white  3      -2          |   Kh8-g8           W:Pc7 W:Kg8 B:Kb7 B:Ph5 
+5140  black  4      -2          |    Kb7-c7          W:Kg8 B:Kc7 B:Ph5 
+5191  black  4      30 -cutoff- |    Kb7-b6          W:Pc7 W:Kg8 B:Kb6 B:Ph5 
+5202  black  4      30 -cutoff- |    Kb7-c6          W:Pc7 W:Kg8 B:Kc6 B:Ph5 
+5213  black  4      30 -cutoff- |    Kb7-a7          W:Pc7 W:Kg8 B:Ka7 B:Ph5 
+5221  black  4      30 -cutoff- |    Kb7-a6          W:Pc7 W:Kg8 B:Ka6 B:Ph5 
+5229  black  4      30 -cutoff- |    Kb7-a8          W:Pc7 W:Kg8 B:Ka8 B:Ph5 
+5235  black  4      94 -cutoff- |    Kb7-b8          W:Pc7 W:Kg8 B:Kb8 B:Ph5 
+5237  black  4      -2          |    Kb7-c8          W:Pc7 W:Kg8 B:Kc8 B:Ph5 
+5273  black  4      -2          |    Ph5-h4          W:Pc7 W:Kg8 B:Kb7 B:Ph4 
+best moves based on search results
 1. Pc6-c7, Ka6-b7
+
+x _ x _ x _ x k 
+_ x p x _ x _ x 
+K _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
+
+x _ x _ x _ x k 
+_ K p x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
 2. Pc7-c8, Kb7-c8
+
+x _ q _ x _ x k 
+_ K _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
+
+x _ K _ x _ x k 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
 3. Kh8-g7, Kc8-b7
 
-** Result **
+x _ K _ x _ x _ 
+_ x _ x _ x k x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ P 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+x _ x _ x _ x _ 
+_ x _ x _ x _ x 
+
 
 x _ x _ x _ x _ 
 _ K _ x _ x k x 

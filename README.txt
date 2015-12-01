@@ -64,4 +64,6 @@ Your program should print a complete search subtree beginning from move number M
 	
 Print sample subtrees for different pairs M, N. The depth of each move in your trees should be reflected by the left margin. The deeper move is in your tree the greater its margin is. Print the total number of moves included in the search tree.
 Print optimal subtree resulted from your search. It should be a solution to the problem. Verify if searches with different depth limit yield a solution to the problem. If your trees are represented by graphs and your moves included on the tree could be demonstrated by the dynamic pictures of movement of pieces over the chess board you will get extra credit.
-	see output examples document.
+	for comments on finding a solution and examples, see output examples.txt
+
+---------------------------------------
