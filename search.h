@@ -39,7 +39,10 @@ public:
 		return false;
 	}
 	void printBoardImage() { state.printBoard(); }
+	void setNodeCount(int c) { count = c; }
+	int getNodeCount() { return count; }
 private:
+	int count;
 	std::vector<searchNode* > children;
 	Board state;
 	std::string moveName;
@@ -50,10 +53,9 @@ private:
 int search(Board,int,int,int);
 int _search(searchNode*,const int,int,int);
 void printTree(searchNode*,int,int);
-void _printTree(searchNode*,int,int);
 void printBest(searchNode*);
 void _printBest(searchNode*,int);
-void printOptimal(searchNode*,int,int);
+void _printTree(searchNode*,int,int);
 searchNode* _traverseBest(searchNode*,int,int);
 int simpleHeuristic(Board);
 void calculatePieceValue(int&,int);

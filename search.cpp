@@ -2,19 +2,23 @@
 #include <iomanip>
 #include <sstream>
 
+int nodeCounter;
+
 int search(Board b, int maxDepth, int m, int n)
 {
 	searchNode* head = new searchNode(b);
+	nodeCounter = 0;
 	std::cout << "\n** R.Reti Endgame Board **\n";
 	head->printBoardImage();
 	int topHeurisic = _search(head,maxDepth,0,UNSET);
-	printOptimal(head,m,n);
+	printTree(head,m,n);
 	printBest(head);
 	return topHeurisic;
 }
 
 int _search(searchNode* thisNode, const int maxDepth, int depth, int parentHeuristic)
 {
+	thisNode->setNodeCount(nodeCounter++);
 	if (thisNode->anyKingsMissing())
 	{
 		return simpleHeuristic(thisNode->getBoard());
@@ -47,7 +51,6 @@ int _search(searchNode* thisNode, const int maxDepth, int depth, int parentHeuri
 				(currentPlayer == 0 && bestHeuristic > parentHeuristic)
 				)
 			{
-				//std::cout << "player: " << currentPlayer << " best: " << bestHeuristic << " parent: " << parentHeuristic << " -> cutoff applied.\n";
 				thisNode->setCutoff(true);
 				break;
 			}
@@ -99,28 +102,13 @@ void updateBestHeuristic(int pl, int& bestH, int newH)
 	}
 }
 
-void printTree(searchNode* head, int m, int n)
-{
-	std::cout << "\nplayer depth  heuristic    move                board\n";
-	std::cout <<   "----------------------------------------------------\n";
-	_printTree(head,0,n);
-/*	if (
-		(m == 0 && n == 0) ||
-		(m > n) ||
-		(m < 0)
-		)
-	{
-		m = 0;
-		// n = some max depth value
-	}*/
-}
-
 void _printTree(searchNode* node, int depth, int maxDepth)
 {
 	if (depth <= maxDepth)
 	{
 		std::ostringstream output;
 		output << std::left;
+		output << std::setw(6) << node->getNodeCount();
 		if (depth == 0)
 			output << "start  ";
 		else if ((depth % 2) == 0)
@@ -151,7 +139,7 @@ void _printTree(searchNode* node, int depth, int maxDepth)
 
 void printBest(searchNode* head)
 {
-	// std::cout << "best moves based on search results\n";
+	std::cout << "best moves based on search results\n";
 	_printBest(head,0);
 }
 
@@ -164,8 +152,7 @@ void _printBest(searchNode* node, int depth)
 	}
 	if (best->getHeuristic() == UNSET)
 	{
-		std::cout << "\n** Result **\n";
-		node->printBoardImage();
+		std::cout << "\n";		
 	}
 	else 
 	{
@@ -176,17 +163,19 @@ void _printBest(searchNode* node, int depth)
 		else 
 		{
 			std::cout << best->getMoveName() << "\n";
+			node->printBoardImage();
+			best->printBoardImage();
 		}
 		_printBest(best,depth+1);
 	}	
 }
 
-void printOptimal(searchNode* head, int m, int n)
+void printTree(searchNode* head, int m, int n)
 {
 	searchNode* cursor = head;
-	std::cout << "best moves based on search results\n";
-	std::cout << "\nplayer depth  heuristic    move                board\n";
-	std::cout <<   "----------------------------------------------------\n";
+	std::cout << "Total Moves In Search Tree: " << nodeCounter + 1 << "\n";
+	std::cout << "\nindex player depth  heuristic    move                board\n";
+	std::cout <<   "----------------------------------------------------------\n";
 
 	if (m > 0)
 		cursor = _traverseBest(cursor,0,m);
